@@ -277,6 +277,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
       </div>
       <div style="font-size:0.68rem;color:rgba(255,255,255,0.4);font-weight:600">正在準備你的空間…</div>
     </div>
+    <div style="margin-top:24px;font-size:0.62rem;color:rgba(255,255,255,0.35);font-weight:600;letter-spacing:.06em">Created by @mao_0823</div>
   </div>
 </div>
 <input type="hidden" id="wIn" value="60"><input type="hidden" id="fIn" value="20">
@@ -353,6 +354,30 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     </div>
     <div id="pilatesKcal" style="display:none" class="kcal-row"><div><div class="kcal-row-lbl">皮拉提斯預估消耗</div></div><div style="text-align:right"><div class="kcal-row-val" id="pilatesKcalVal">0</div><div class="kcal-row-sub">kcal</div></div></div>
   </div>
+
+  <!-- HOME EXERCISE -->
+  <div class="card" id="homeExCard">
+    <div class="ct">居家運動</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="homeExParts">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:4px;width:100%">選擇部位（可多選）</div>
+      <button onclick="toggleHomePart(this,'肩背')" class="home-part-btn" data-part="肩背" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">肩背</button>
+      <button onclick="toggleHomePart(this,'臀腿')" class="home-part-btn" data-part="臀腿" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">臀腿</button>
+      <button onclick="toggleHomePart(this,'核心')" class="home-part-btn" data-part="核心" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">核心</button>
+      <button onclick="toggleHomePart(this,'全身')" class="home-part-btn" data-part="全身" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">全身</button>
+    </div>
+    <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:6px">運動時間</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <button onclick="setHomeDur(this,10)" class="home-dur-btn" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">10分</button>
+      <button onclick="setHomeDur(this,20)" class="home-dur-btn" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">20分</button>
+      <button onclick="setHomeDur(this,30)" class="home-dur-btn" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">30分</button>
+      <button onclick="setHomeDur(this,45)" class="home-dur-btn" style="padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:1.5px solid #EDE8F5;background:var(--p3);color:var(--text2);cursor:pointer;font-family:'Nunito',sans-serif">45分</button>
+    </div>
+    <div id="homeExResults" style="display:none">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:8px">推薦影片</div>
+      <div id="homeExList"></div>
+    </div>
+  </div>
+
   <div style="padding:0 12px 4px">
     <div style="display:flex;gap:8px">
       <div style="background:#F0EBF8;border-radius:10px;padding:9px 14px;font-size:0.8rem;font-weight:700;color:#7A5FAC;display:flex;align-items:center;flex-shrink:0"><span id="saveTargetLabel">今天</span></div>
@@ -400,29 +425,12 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
 
 <!-- ══ 拉伸 & 動作教學 ══ -->
 <div class="pg" id="pg-stretch">
-
-  <!-- 重訓動作注意事項 -->
-  <div class="card">
-    <div class="ct">重訓器械動作注意事項</div>
-    <div style="display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:none" id="exTipCats"></div>
-    <div id="exTipList"></div>
-  </div>
-
-  <!-- 暖身動態拉伸 -->
-  <div class="card">
-    <div class="ct">🔥 訓練前 · 動態暖身（5–8分鐘）</div>
-    <div style="font-size:0.75rem;color:var(--text2);font-weight:600;margin-bottom:10px;line-height:1.6">動態拉伸幫助提升體溫、啟動肌肉神經連結，減少受傷風險。每個動作做 10–15 次。</div>
-    <div id="warmupList"></div>
-  </div>
-
-  <!-- 訓練後靜態拉伸 -->
-  <div class="card">
-    <div class="ct">🌙 訓練後 · 靜態拉伸（10–15分鐘）</div>
-    <div style="font-size:0.75rem;color:var(--text2);font-weight:600;margin-bottom:10px;line-height:1.6">靜態拉伸幫助放鬆肌肉、促進血液循環、加速恢復。每個姿勢維持 30–45 秒，自然呼吸。</div>
-    <div id="stretchList"></div>
-  </div>
-
+<div style="padding:0 12px;margin-bottom:2px">
+  <div style="display:flex;gap:6px;overflow-x:auto;padding:10px 0 6px;scrollbar-width:none" id="guideMainTabs"></div>
 </div>
+<div id="guideContent"></div>
+</div>
+
 <div class="pg" id="pg-me">
   <div class="card"><div class="ct">成就</div><div class="ach-grid" id="achGrid"></div></div>
   <div class="card"><div class="ct">個人資料</div><div style="display:flex;flex-direction:column;gap:8px"><div class="si-wrap"><div class="si-lbl">姓名</div><input class="si" id="pName" placeholder="你的名字"></div><div class="si-row"><div class="si-wrap"><div class="si-lbl">身高 (cm)</div><input class="si" id="pH" type="number" placeholder="165"></div><div class="si-wrap"><div class="si-lbl">目標體重 (kg)</div><input class="si" id="pGW" type="number" placeholder="55"></div></div><div class="si-row"><div class="si-wrap"><div class="si-lbl">每日卡路里目標</div><input class="si" id="pCal" type="number" placeholder="1800"></div><div class="si-wrap"><div class="si-lbl">飲水目標 (ml)</div><input class="si" id="pWt" type="number" placeholder="2000"></div></div><button class="btn" onclick="saveProfile()">儲存</button></div></div>
@@ -432,7 +440,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   <button class="nb active" onclick="sw('home',this)"><span class="ni">🫧</span><span class="nl">訓練</span></button>
   <button class="nb" onclick="sw('diet',this)"><span class="ni">🌿</span><span class="nl">飲食體態</span></button>
   <button class="nb" onclick="sw('cal',this)"><span class="ni">🌙</span><span class="nl">月曆</span></button>
-  <button class="nb" onclick="sw('stretch',this)"><span class="ni">🧘</span><span class="nl">拉伸</span></button>
+  <button class="nb" onclick="sw('stretch',this)"><span class="ni">🧘</span><span class="nl">動作指導</span></button>
   <button class="nb" onclick="sw('me',this)"><span class="ni">✨</span><span class="nl">我的</span></button>
 </nav>
 <div class="mo" id="nameMo"><div class="mbox"><div class="mtit">輸入你的名字</div><input class="minp" id="nameIn" placeholder="例：小美、健身俠..."><div class="mbtns"><button class="mbtn sc" onclick="closeMo('nameMo')">取消</button><button class="mbtn pri" onclick="saveName()">確認</button></div></div></div>
@@ -459,9 +467,9 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   </div>
 </div>
 <div class="mo" id="foodItemEditMo"><div class="mbox"><div class="mtit" id="feItemTitle">編輯食物</div><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"><div><div class="save-food-lbl">食物名稱</div><input class="save-food-input" id="feItemName" style="width:100%;margin-top:4px"></div><div><div class="save-food-lbl">大卡</div><input class="save-food-input" id="feItemCal" type="number" style="width:100%;margin-top:4px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><div class="save-food-lbl">蛋白質 (g)</div><input class="save-food-input" id="feItemPro" type="number" style="width:100%;margin-top:4px"></div><div><div class="save-food-lbl">碳水 (g)</div><input class="save-food-input" id="feItemCb" type="number" style="width:100%;margin-top:4px"></div></div></div><div class="mbtns"><button class="mbtn sc" onclick="closeMo('foodItemEditMo')">取消</button><button class="mbtn pri" onclick="saveFoodItemEdit()">儲存</button></div></div></div>
-<div class="mo" id="dayCardMo"><div class="mbox" style="text-align:center;padding:24px 20px 20px"><div id="dcEmoji" style="font-size:2.2rem;margin-bottom:10px">✨</div><div style="font-size:0.62rem;font-weight:800;color:var(--text2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px">Glow Burn · 訓練記錄</div><div id="dcName" style="font-size:1.6rem;font-weight:900;color:var(--text);margin-bottom:2px;line-height:1.3"></div><div id="dcDate" style="font-size:0.68rem;color:var(--text2);font-weight:600;margin-bottom:16px"></div><div id="dcStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px"></div><div id="dcSessions" style="text-align:left;margin-bottom:14px"></div><button class="mbtn pri" onclick="closeMo('dayCardMo')" style="width:100%">關閉</button></div></div>
+<div class="mo" id="dayCardMo"><div class="mbox" style="text-align:center;padding:0;overflow:hidden"><div style="background:linear-gradient(135deg,#7A5FAC,#9B80C8);padding:22px 20px 18px;position:relative;overflow:hidden"><div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:50%"></div><div id="dcEmoji" style="font-size:2.4rem;margin-bottom:8px">✨</div><div style="font-size:0.72rem;font-weight:800;color:rgba(255,255,255,0.75);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px">恭喜今日訓練完成</div><div id="dcName" style="font-size:1.6rem;font-weight:900;color:var(--text);margin-bottom:2px;line-height:1.3"></div><div id="dcDate" style="font-size:0.68rem;color:var(--text2);font-weight:600;margin-bottom:16px"></div><div id="dcStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px"></div><div id="dcSessions" style="text-align:left;margin-bottom:14px"></div><button onclick="closeMo('dayCardMo')" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#7A5FAC,#9B80C8);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer">關閉</button></div></div></div>
 <div class="mo" id="levelUpMo"><div class="mbox" style="text-align:center;padding:28px 22px 24px"><div id="lvlUpEmoji" style="font-size:3rem;margin-bottom:6px">⭐</div><div style="font-size:0.65rem;font-weight:800;color:var(--text2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px">Level Up!</div><div id="lvlUpTitle" style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;color:#7A5FAC;margin-bottom:4px;line-height:1.2"></div><div id="lvlUpSub" style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px"></div><div id="lvlUpXP" style="font-size:0.76rem;font-weight:600;color:var(--text2);margin-bottom:18px"></div><div id="lvlUpQuote" style="background:var(--p3);border-radius:12px;padding:12px 16px;font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.6;margin-bottom:18px;font-style:italic;border-left:3px solid #9B80C8"></div><button class="mbtn pri" onclick="closeMo('levelUpMo')" style="width:100%">繼續前進！</button></div></div>
-<div class="mo" id="completionMo"><div class="mbox" style="text-align:center"><div id="completionEmoji" style="font-size:3rem;margin-bottom:8px"></div><div id="completionTitle" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;font-weight:300;color:var(--text);margin-bottom:4px"></div><div id="completionSubtitle" style="font-size:0.82rem;color:var(--text2);font-weight:600;margin-bottom:16px"></div><div id="completionStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px"></div><div id="completionSessions" style="text-align:left;margin-bottom:16px"></div><div id="completionQuote" style="background:var(--p3);border-radius:12px;padding:12px;font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.6;font-style:italic;margin-bottom:14px;border-left:3px solid #7A5FAC"></div><button class="mbtn pri" onclick="closeMo('completionMo')" style="width:100%">繼續加油！</button></div></div>
+<div class="mo" id="completionMo"><div class="mbox" style="text-align:center;padding:24px 20px 20px;background:#fff"><div id="completionEmoji" style="font-size:2.8rem;margin-bottom:10px"></div><div id="completionTitle" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.6rem;font-weight:300;color:var(--acc);margin-bottom:4px"></div><div id="completionSubtitle" style="font-size:0.8rem;color:var(--text2);font-weight:600;margin-bottom:16px"></div><div id="completionStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px"></div><div id="completionSessions" style="text-align:left;margin-bottom:16px"></div><div id="completionQuote" style="background:#F9F7FD;border-radius:12px;padding:14px 16px;font-size:0.84rem;font-weight:600;color:var(--text);line-height:1.7;font-style:italic;margin-bottom:14px;border-left:3px solid #C4AEE0;text-align:left"></div><button onclick="closeMo('completionMo')" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#7A5FAC,#9B80C8);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer">繼續加油！</button></div></div>
 <div class="tut-overlay" id="tutOverlay" style="display:none"></div>
 <div class="tut-tooltip" id="tutTooltip" style="display:none">
   <div style="display:flex;gap:6px;justify-content:center;margin-bottom:14px" id="tutDots2"></div>
@@ -534,136 +542,343 @@ function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2
 function getWkS(){const d=new Date();d.setDate(d.getDate()-d.getDay());d.setHours(0,0,0,0);return d;}
 function getW(){return parseFloat(document.getElementById('wIn').value)||60;}
 
-// ══ STRETCH & EXERCISE TIPS DATA ══
-const EX_TIPS = {
-  '肩背胸': [
-    {n:'槓鈴平板臥推',muscle:'胸大肌・三頭',vid:'https://www.youtube.com/results?search_query=槓鈴臥推教學+重訓',tips:['雙腳踩穩地板，背部自然弓起，肩胛骨夾緊下壓','握距略寬於肩，手腕保持中立不彎折','槓鈴下放輕觸胸口劍突上方，下放控制 2–3 秒再推起','推起時吐氣，不要讓槓鈴在胸口彈起']},
-    {n:'上斜史密斯臥推',muscle:'胸大肌上束',vid:'https://www.youtube.com/results?search_query=上斜臥推教學',tips:['斜板建議 30–45°，眼睛在槓鈴正下方','史密斯軌跡固定，肩關節不要過度外展','比平板重量輕，感受胸上束收縮優先']},
-    {n:'肩推',muscle:'三角肌前束・中束',vid:'https://www.youtube.com/results?search_query=肩推教學+啞鈴槓鈴',tips:['起始位置槓鈴在鎖骨正上方','核心收緊，避免過度後仰代償腰椎','推到頂端肘關節不鎖死，保留微彎']},
-    {n:'啞鈴側平舉',muscle:'三角肌中束',vid:'https://www.youtube.com/results?search_query=啞鈴側平舉教學',tips:['手肘微彎約 15°，拇指略往下做倒水動作','舉起穩定，下放比舉起更慢做負向收縮','頂點在肩膀水平即可，不超過肩高']},
-    {n:'繩索下壓',muscle:'肱三頭肌',vid:'https://www.youtube.com/results?search_query=繩索下壓三頭肌教學',tips:['上臂夾緊身側固定，只有前臂移動','壓到底手肘完全伸直停頓 1 秒','回程緩慢控制，讓肌肉充分伸展']},
-    {n:'高位下拉',muscle:'背闊肌・菱形肌',vid:'https://www.youtube.com/results?search_query=高位下拉教學+背部訓練',tips:['握距略寬於肩，下拉時用肘帶動而非手臂硬拉','拉到胸口上緣，感受背闊肌收縮','上升時讓肩胛骨打開，充分伸展背部']},
-    {n:'坐姿划船',muscle:'菱形肌・斜方肌中段',vid:'https://www.youtube.com/results?search_query=坐姿划船教學+背部訓練',tips:['拉到肚臍位置，肘部貼近身體兩側','收縮時想像把兩側肩胛骨往中間夾','前傾伸展時充分拉伸背肌，控制不要彈回']},
-    {n:'反向飛鳥',muscle:'後三角・菱形肌',vid:'https://www.youtube.com/results?search_query=反向飛鳥教學+後三角',tips:['俯身接近水平，手肘微彎固定','舉起時以後三角肌主導，肘往天花板方向拉','幅度不超過肩膀水平，避免過度旋轉']},
-    {n:'引體向上',muscle:'背闊肌・二頭肌',vid:'https://www.youtube.com/results?search_query=引體向上教學+背部訓練',tips:['下垂時肩胛骨自然放鬆充分伸展','拉起前先做肩胛骨下壓的啟動動作','拉到下巴過槓，新手可用輔助帶']},
+// ════════════════════════════════════════
+// GUIDE DATA
+// ════════════════════════════════════════
+
+// Equipment SVGs - clearer machine/exercise illustrations
+const EQUIP_SVG = {
+  '高位下拉':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="4" width="62" height="8" rx="3" fill="#C4AEE0"/><line x1="18" y1="12" x2="28" y2="28" stroke="#B8ACDC" stroke-width="2"/><line x1="52" y1="12" x2="42" y2="28" stroke="#B8ACDC" stroke-width="2"/><circle cx="35" cy="36" r="7" fill="#9B80C8"/><line x1="28" y1="39" x2="22" y2="52" stroke="#555" stroke-width="2.5"/><line x1="42" y1="39" x2="48" y2="52" stroke="#555" stroke-width="2.5"/><line x1="35" y1="43" x2="35" y2="58" stroke="#555" stroke-width="2"/><line x1="35" y1="58" x2="28" y2="68" stroke="#555" stroke-width="2"/><line x1="35" y1="58" x2="42" y2="68" stroke="#555" stroke-width="2"/></svg>`,
+  '坐姿划船':`<svg viewBox="0 0 70 70" fill="none"><rect x="54" y="4" width="8" height="62" rx="3" fill="#C4AEE0"/><circle cx="22" cy="28" r="7" fill="#9B80C8"/><line x1="22" y1="35" x2="22" y2="52" stroke="#555" stroke-width="2.5"/><line x1="22" y1="42" x2="12" y2="50" stroke="#555" stroke-width="2"/><line x1="22" y1="40" x2="46" y2="36" stroke="#9B80C8" stroke-width="3"/><line x1="46" y1="33" x2="46" y2="43" stroke="#555" stroke-width="2.5"/><line x1="22" y1="52" x2="14" y2="66" stroke="#555" stroke-width="2.5"/><line x1="22" y1="52" x2="30" y2="66" stroke="#555" stroke-width="2.5"/></svg>`,
+  '槓鈴臥推':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="42" width="62" height="8" rx="3" fill="#C4AEE0"/><circle cx="35" cy="20" r="7" fill="#9B80C8"/><line x1="35" y1="27" x2="35" y2="40" stroke="#555" stroke-width="2"/><line x1="18" y1="32" x2="52" y2="32" stroke="#7A5FAC" stroke-width="3"/><rect x="4" y="26" width="8" height="14" rx="2" fill="#B8ACDC"/><rect x="58" y="26" width="8" height="14" rx="2" fill="#B8ACDC"/><line x1="35" y1="40" x2="26" y2="58" stroke="#555" stroke-width="2.5"/><line x1="35" y1="40" x2="44" y2="58" stroke="#555" stroke-width="2.5"/></svg>`,
+  '肩推':`<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="14" r="7" fill="#9B80C8"/><line x1="35" y1="21" x2="35" y2="36" stroke="#555" stroke-width="2"/><line x1="12" y1="30" x2="58" y2="30" stroke="#7A5FAC" stroke-width="3"/><rect x="4" y="23" width="8" height="14" rx="2" fill="#C4AEE0"/><rect x="58" y="23" width="8" height="14" rx="2" fill="#C4AEE0"/><line x1="35" y1="36" x2="26" y2="54" stroke="#555" stroke-width="2.5"/><line x1="35" y1="36" x2="44" y2="54" stroke="#555" stroke-width="2.5"/><line x1="26" y1="54" x2="24" y2="64" stroke="#555" stroke-width="2"/><line x1="44" y1="54" x2="46" y2="64" stroke="#555" stroke-width="2"/></svg>`,
+  '啞鈴側平舉':`<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="14" r="7" fill="#9B80C8"/><line x1="35" y1="21" x2="35" y2="38" stroke="#555" stroke-width="2.5"/><line x1="10" y1="36" x2="60" y2="36" stroke="#9B80C8" stroke-width="3"/><circle cx="7" cy="36" r="5" fill="#C4AEE0"/><circle cx="63" cy="36" r="5" fill="#C4AEE0"/><line x1="35" y1="38" x2="26" y2="56" stroke="#555" stroke-width="2.5"/><line x1="35" y1="38" x2="44" y2="56" stroke="#555" stroke-width="2.5"/></svg>`,
+  '負重深蹲':`<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="12" r="7" fill="#9B80C8"/><line x1="12" y1="22" x2="58" y2="22" stroke="#7A5FAC" stroke-width="3"/><rect x="4" y="15" width="8" height="14" rx="2" fill="#C4AEE0"/><rect x="58" y="15" width="8" height="14" rx="2" fill="#C4AEE0"/><line x1="35" y1="22" x2="26" y2="44" stroke="#555" stroke-width="3"/><line x1="35" y1="22" x2="44" y2="44" stroke="#555" stroke-width="3"/><line x1="26" y1="44" x2="22" y2="60" stroke="#555" stroke-width="2.5"/><line x1="44" y1="44" x2="48" y2="60" stroke="#555" stroke-width="2.5"/></svg>`,
+  '槓鈴臀推':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="50" width="62" height="9" rx="3" fill="#EDE8F5"/><rect x="14" y="34" width="42" height="10" rx="4" fill="#C4AEE0"/><circle cx="54" cy="20" r="7" fill="#9B80C8"/><line x1="54" y1="27" x2="52" y2="42" stroke="#555" stroke-width="2.5"/><line x1="52" y1="42" x2="44" y2="54" stroke="#9B80C8" stroke-width="3"/><line x1="22" y1="42" x2="14" y2="54" stroke="#555" stroke-width="2"/></svg>`,
+  '倒蹬':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="8" width="16" height="56" rx="4" fill="#EDE8F5"/><rect x="48" y="6" width="18" height="30" rx="4" transform="rotate(35 48 6)" fill="#C4AEE0"/><circle cx="36" cy="58" r="7" fill="#9B80C8"/><line x1="36" y1="51" x2="36" y2="40" stroke="#555" stroke-width="2.5"/><line x1="36" y1="40" x2="26" y2="28" stroke="#9B80C8" stroke-width="3"/><line x1="36" y1="40" x2="46" y2="28" stroke="#9B80C8" stroke-width="3"/></svg>`,
+  '附身勾腿':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="8" width="20" height="56" rx="4" fill="#EDE8F5"/><circle cx="48" cy="14" r="7" fill="#9B80C8"/><line x1="48" y1="21" x2="48" y2="38" stroke="#555" stroke-width="2.5"/><line x1="48" y1="28" x2="34" y2="30" stroke="#555" stroke-width="2"/><line x1="48" y1="38" x2="42" y2="56" stroke="#555" stroke-width="2.5"/><path d="M42 44 Q32 42 30 34" stroke="#9B80C8" stroke-width="3" fill="none"/><circle cx="28" cy="32" r="5" fill="#C4AEE0"/><line x1="48" y1="38" x2="58" y2="56" stroke="#555" stroke-width="2.5"/></svg>`,
+  '卷腹':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="56" width="62" height="8" rx="3" fill="#EDE8F5"/><circle cx="26" cy="24" r="7" fill="#9B80C8"/><line x1="26" y1="31" x2="32" y2="46" stroke="#555" stroke-width="2.5"/><line x1="32" y1="46" x2="16" y2="54" stroke="#9B80C8" stroke-width="3"/><line x1="32" y1="46" x2="52" y2="52" stroke="#9B80C8" stroke-width="3"/><line x1="26" y1="31" x2="40" y2="38" stroke="#555" stroke-width="2"/><line x1="18" y1="28" x2="26" y2="31" stroke="#555" stroke-width="2"/></svg>`,
+  '棒式':`<svg viewBox="0 0 70 70" fill="none"><circle cx="58" cy="26" r="7" fill="#9B80C8"/><line x1="12" y1="40" x2="58" y2="40" stroke="#7A5FAC" stroke-width="3"/><line x1="58" y1="33" x2="58" y2="40" stroke="#555" stroke-width="2.5"/><line x1="12" y1="40" x2="8" y2="56" stroke="#9B80C8" stroke-width="3"/><line x1="8" y1="56" x2="4" y2="64" stroke="#555" stroke-width="2.5"/><line x1="8" y1="56" x2="16" y2="64" stroke="#555" stroke-width="2.5"/><line x1="58" y1="40" x2="54" y2="58" stroke="#555" stroke-width="2.5"/><line x1="54" y1="58" x2="50" y2="64" stroke="#555" stroke-width="2.5"/><line x1="54" y1="58" x2="60" y2="64" stroke="#555" stroke-width="2.5"/></svg>`,
+  '懸垂舉腿':`<svg viewBox="0 0 70 70" fill="none"><rect x="4" y="4" width="62" height="8" rx="3" fill="#C4AEE0"/><circle cx="35" cy="22" r="7" fill="#9B80C8"/><line x1="24" y1="12" x2="26" y2="27" stroke="#9B80C8" stroke-width="3"/><line x1="46" y1="12" x2="44" y2="27" stroke="#9B80C8" stroke-width="3"/><line x1="35" y1="29" x2="35" y2="44" stroke="#555" stroke-width="2.5"/><line x1="35" y1="44" x2="24" y2="58" stroke="#555" stroke-width="3"/><line x1="35" y1="44" x2="46" y2="58" stroke="#555" stroke-width="3"/></svg>`,
+};
+
+// Stretch SVGs - improved clarity
+const SSVG = {
+  // ── SHOULDER/NECK ──
+  neck_side:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><line x1="28" y1="16" x2="28" y2="34" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="22" x2="16" y2="30" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="22" x2="40" y2="28" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="34" x2="20" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="36" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="22" y2="44" stroke="#888" stroke-width="1.5" stroke-linecap="round"/><line x1="28" y1="34" x2="34" y2="44" stroke="#888" stroke-width="1.5" stroke-linecap="round"/><circle cx="23" cy="8" r="5" fill="#9B80C8" transform="rotate(-18,23,8)"/><path d="M38 11 Q46 16 44 26" stroke="#9B80C8" stroke-width="2" fill="none" stroke-dasharray="3,2"/><line x1="44" y1="12" x2="44" y2="26" stroke="#9B80C8" stroke-width="2" stroke-linecap="round"/></svg>`,
+  cross_shoulder:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><line x1="28" y1="16" x2="28" y2="34" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="22" x2="8" y2="22" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="8" y1="18" x2="8" y2="26" stroke="#9B80C8" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="22" x2="44" y2="30" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="34" x2="20" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="36" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="22" y2="44" stroke="#888" stroke-width="1.5"/><line x1="28" y1="34" x2="34" y2="44" stroke="#888" stroke-width="1.5"/></svg>`,
+  doorframe:`<svg viewBox="0 0 56 70" fill="none"><line x1="6" y1="0" x2="6" y2="70" stroke="#C4AEE0" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="10" r="6" fill="#C4AEE0"/><line x1="32" y1="16" x2="32" y2="34" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="22" x2="6" y2="22" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="32" y1="22" x2="46" y2="30" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="34" x2="24" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="34" x2="40" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="34" x2="26" y2="44" stroke="#888" stroke-width="1.5"/><line x1="32" y1="34" x2="38" y2="44" stroke="#888" stroke-width="1.5"/></svg>`,
+  shoulder_open:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><line x1="28" y1="16" x2="28" y2="34" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="22" x2="8" y2="14" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="22" x2="48" y2="14" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="34" x2="20" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="36" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="34" x2="22" y2="44" stroke="#888" stroke-width="1.5"/><line x1="28" y1="34" x2="34" y2="44" stroke="#888" stroke-width="1.5"/></svg>`,
+  // ── CHEST/BACK ──
+  cobra:`<svg viewBox="0 0 56 70" fill="none"><ellipse cx="28" cy="58" rx="20" ry="5" fill="#EDE8F5"/><circle cx="28" cy="22" r="6" fill="#C4AEE0"/><path d="M28 28 Q28 44 16 54" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="16" y1="38" x2="6" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="38" x2="28" y2="54" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="28" x2="12" y2="26" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="28" x2="44" y2="26" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/></svg>`,
+  cat_cow:`<svg viewBox="0 0 56 70" fill="none"><circle cx="48" cy="20" r="6" fill="#C4AEE0"/><path d="M44 26 Q34 38 22 34 Q12 30 8 26" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="44" y1="28" x2="42" y2="46" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="36" x2="20" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="8" y1="30" x2="6" y2="46" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="42" y1="46" x2="38" y2="56" stroke="#888" stroke-width="2"/><line x1="20" y1="52" x2="16" y2="60" stroke="#888" stroke-width="2"/></svg>`,
+  child_pose:`<svg viewBox="0 0 56 70" fill="none"><circle cx="48" cy="26" r="6" fill="#C4AEE0"/><path d="M44 32 Q34 42 20 46" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="20" y1="46" x2="8" y2="44" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="36" y1="40" x2="34" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="26" y1="46" x2="24" y2="56" stroke="#888" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  spinal_twist:`<svg viewBox="0 0 56 70" fill="none"><ellipse cx="28" cy="60" rx="20" ry="5" fill="#EDE8F5"/><circle cx="28" cy="14" r="6" fill="#C4AEE0"/><line x1="28" y1="20" x2="28" y2="38" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="38" x2="48" y2="38" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="38" x2="38" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="36" y1="26" x2="8" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>`,
+  lat_stretch:`<svg viewBox="0 0 56 70" fill="none"><line x1="6" y1="0" x2="6" y2="40" stroke="#C4AEE0" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="14" r="6" fill="#C4AEE0"/><line x1="30" y1="20" x2="28" y2="36" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><path d="M30 20 Q40 14 42 24 Q44 34 30 32" stroke="#9B80C8" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="28" y1="36" x2="20" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="36" x2="36" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  // ── GLUTES/LEGS ──
+  figure4:`<svg viewBox="0 0 56 70" fill="none"><ellipse cx="28" cy="62" rx="20" ry="5" fill="#EDE8F5"/><circle cx="14" cy="14" r="6" fill="#C4AEE0"/><line x1="14" y1="20" x2="16" y2="36" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="36" x2="8" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="36" x2="30" y2="50" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="28" x2="30" y2="50" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="36" x2="30" y2="36" stroke="#9B80C8" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  quad_stand:`<svg viewBox="0 0 56 70" fill="none"><line x1="8" y1="10" x2="8" y2="60" stroke="#C4AEE0" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="10" r="6" fill="#C4AEE0"/><line x1="32" y1="16" x2="32" y2="32" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="22" x2="20" y2="28" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="22" x2="42" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="32" x2="28" y2="50" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><path d="M28 38 Q18 40 20 54" stroke="#9B80C8" stroke-width="3" fill="none" stroke-linecap="round"/><line x1="42" y1="26" x2="20" y2="54" stroke="#9B80C8" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  hamstring:`<svg viewBox="0 0 56 70" fill="none"><ellipse cx="28" cy="62" rx="20" ry="5" fill="#EDE8F5"/><circle cx="14" cy="14" r="6" fill="#C4AEE0"/><line x1="14" y1="20" x2="16" y2="38" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="38" x2="10" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="14" y1="22" x2="8" y2="22" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="22" x2="26" y2="18" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="50" y2="18" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/></svg>`,
+  hip_flexor:`<svg viewBox="0 0 56 70" fill="none"><circle cx="26" cy="10" r="6" fill="#C4AEE0"/><line x1="26" y1="16" x2="26" y2="30" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="26" y1="22" x2="14" y2="28" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="22" x2="38" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="30" x2="16" y2="46" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="46" x2="14" y2="58" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="26" y1="30" x2="40" y2="42" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="42" x2="40" y2="58" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/></svg>`,
+  butterfly:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><line x1="28" y1="16" x2="28" y2="30" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><path d="M28 30 Q18 36 12 50" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M28 30 Q38 36 44 50" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="12" y1="50" x2="44" y2="50" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="16" x2="16" y2="24" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="16" x2="40" y2="24" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>`,
+  // ── CORE ──
+  forward_fold:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><path d="M28 16 Q26 30 20 38" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="20" y1="38" x2="14" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="38" x2="30" y2="54" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="20" x2="12" y2="32" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="12" y1="32" x2="10" y2="52" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/></svg>`,
+  // ── WARMUP ──
+  arm_circle:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="12" r="6" fill="#C4AEE0"/><line x1="28" y1="18" x2="28" y2="36" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><path d="M28 22 Q46 14 48 28 Q50 44 28 38" stroke="#9B80C8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="4,2"/><line x1="28" y1="36" x2="20" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="36" x2="36" y2="54" stroke="#888" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  hip_circle:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="12" r="6" fill="#C4AEE0"/><line x1="28" y1="18" x2="28" y2="30" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="22" x2="16" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="22" x2="40" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><path d="M28 28 Q42 28 42 40 Q42 52 28 52 Q14 52 14 40 Q14 28 28 28" stroke="#9B80C8" stroke-width="2.5" fill="none" stroke-dasharray="4,2"/><line x1="28" y1="52" x2="22" y2="64" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="52" x2="34" y2="64" stroke="#888" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  leg_swing:`<svg viewBox="0 0 56 70" fill="none"><line x1="6" y1="0" x2="6" y2="70" stroke="#C4AEE0" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="12" r="6" fill="#C4AEE0"/><line x1="30" y1="18" x2="30" y2="34" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="24" x2="8" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="34" x2="26" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><path d="M30 34 Q44 28 50 18" stroke="#9B80C8" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  lunge_twist:`<svg viewBox="0 0 56 70" fill="none"><circle cx="32" cy="10" r="6" fill="#C4AEE0"/><line x1="32" y1="16" x2="30" y2="30" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="30" x2="16" y2="40" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="40" x2="14" y2="56" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="30" x2="44" y2="42" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="44" y1="42" x2="44" y2="58" stroke="#9B80C8" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="22" x2="46" y2="16" stroke="#9B80C8" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  squat_hold:`<svg viewBox="0 0 56 70" fill="none"><circle cx="28" cy="10" r="6" fill="#C4AEE0"/><path d="M28 16 Q26 28 20 36" stroke="#888" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="20" y1="36" x2="12" y2="52" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="36" x2="34" y2="50" stroke="#888" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="20" x2="14" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="20" x2="42" y2="26" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>`,
+};
+
+// GUIDE CATEGORIES
+const GUIDE_CATS = ['肩背胸','臀腿','核心'];
+
+// Data per category
+const GUIDE_DATA = {
+  '肩背胸': {
+    warmup:[
+      {n:'手臂繞環',svg:'arm_circle',reps:'前後各10次',how:'雙臂向前向後各做大圓繞環，活動肩關節與胸椎。幅度越大越好。'},
+      {n:'肩胛骨繞圈',svg:'shoulder_open',reps:'10次',how:'聳肩後往後往下畫圓，充分活動肩胛骨。動作緩慢有控制。'},
+      {n:'弓步轉體',svg:'lunge_twist',reps:'每側10次',how:'踏出弓步後雙手往前腳方向轉體，活動胸椎與肩關節。'},
+    ],
+    stretch:[
+      {n:'門框開胸',svg:'doorframe',sec:45,muscle:'胸大肌・前肩',how:'手肘彎曲90°靠門框，身體緩慢向前傾，感受胸部前側拉伸。左右各45秒。',tip:'下巴保持水平，不要聳肩。'},
+      {n:'頸部側拉',svg:'neck_side',sec:30,muscle:'斜方肌・頸部',how:'頭緩慢側傾，耳朵靠向肩膀，可用手輕壓加深。左右各30秒。',tip:'動作要慢，絕對不要猛拉。'},
+      {n:'跨胸肩拉伸',svg:'cross_shoulder',sec:30,muscle:'後三角・菱形肌',how:'一手橫過胸前，另一手在手肘處往身體方向推壓。左右各30秒。',tip:'肩膀放低，不要聳起。'},
+      {n:'雙臂擴胸',svg:'shoulder_open',sec:30,muscle:'胸大肌・前肩',how:'雙手在身後十指交扣，手臂伸直往後拉，胸口向上打開。保持30秒。',tip:'肩胛骨夾緊，感受胸大肌充分伸展。'},
+      {n:'背闊肌側拉',svg:'lat_stretch',sec:30,muscle:'背闊肌',how:'一手抓門把，身體重心往後往側，感受背側與腋下拉伸。左右各30秒。',tip:'彎曲膝蓋讓重心下沉，拉伸效果更好。'},
+    ],
+    equipment:[
+      {n:'高位下拉',svg:'高位下拉',ref:'https://physicfit.com/lat-pulldown/',tips:['握距略寬於肩，下拉時用肘帶動','拉到胸口上緣，感受背闊肌收縮','上升時讓肩胛骨打開充分伸展']},
+      {n:'坐姿划船',svg:'坐姿划船',ref:'https://physicfit.com/seated-cable-row/',tips:['拉到肚臍位置，肘部貼近身體兩側','收縮時想像把肩胛骨往中間夾','前傾伸展充分，控制不要彈回']},
+      {n:'槓鈴臥推',svg:'槓鈴臥推',ref:'https://physicfit.com/bench-press/',tips:['背部自然弓起，肩胛骨夾緊下壓','槓鈴下放輕觸胸口，控制 2–3 秒','推起時吐氣，手腕保持中立']},
+      {n:'肩推',svg:'肩推',ref:'https://physicfit.com/shoulder-press/',tips:['核心收緊，避免過度後仰','推到頂端肘關節不鎖死','肩膀不要聳起代償']},
+      {n:'啞鈴側平舉',svg:'啞鈴側平舉',ref:'https://physicfit.com/lateral-raise/',tips:['手肘微彎做倒水動作','頂點在肩膀水平即可','下放比舉起更慢（負向收縮）']},
+    ]
+  },
+  '臀腿': {
+    warmup:[
+      {n:'腿後擺踢',svg:'leg_swing',reps:'每側15次',how:'扶牆單腳站立，另一腳前後大幅擺動，動態拉伸膕繩肌與髖屈肌群。'},
+      {n:'側弓步滑行',svg:'lunge_twist',reps:'每側10次',how:'雙腳大步分開左右交替側弓步，活化臀中肌與大腿內收肌群。'},
+      {n:'深蹲停留',svg:'squat_hold',reps:'5次×10秒',how:'慢慢下蹲到底部停留10秒，啟動臀腿並熱身踝關節。'},
+      {n:'髖關節繞圈',svg:'hip_circle',reps:'各方向10圈',how:'雙手叉腰以髖部為中心繞圈，啟動臀肌與髖屈肌群。'},
+    ],
+    stretch:[
+      {n:'跨膝臀部拉伸',svg:'figure4',sec:45,muscle:'臀大肌',how:'仰躺，一腳踝架在另一腳大腿上，雙手抱住下方大腿往胸口拉。左右各45秒。',tip:'腰部貼地，感受臀部深層肌肉。'},
+      {n:'站姿股四頭拉伸',svg:'quad_stand',sec:30,muscle:'股四頭肌',how:'一手扶牆，另一手抓同側腳踝往臀部方向拉，膝蓋朝地板垂直。左右各30秒。',tip:'骨盆保持中立，不要翹臀。'},
+      {n:'膕繩肌拉伸',svg:'hamstring',sec:45,muscle:'膕繩肌',how:'仰躺，一腿抬高保持膝蓋伸直，雙手扶大腿後側輕拉。左右各45秒。',tip:'腰部不離地，腿伸直但膝蓋不鎖死。'},
+      {n:'弓步髖屈肌拉伸',svg:'hip_flexor',sec:30,muscle:'髂腰肌・髖屈肌',how:'弓步跪姿，後腳膝蓋著地，重心往前往下壓，感受後腳髖部前側拉伸。左右各30秒。',tip:'前腳膝蓋不超過腳尖，上身保持直立。'},
+      {n:'蝴蝶式',svg:'butterfly',sec:45,muscle:'大腿內側',how:'坐姿，雙腳腳掌相對靠攏，上身緩慢前傾，感受大腿內側拉伸。保持45秒。',tip:'不要強壓膝蓋，用上身前傾加深。'},
+    ],
+    equipment:[
+      {n:'負重深蹲',svg:'負重深蹲',ref:'https://physicfit.com/squat-guide/',tips:['下蹲時膝蓋朝腳尖方向推，不要內扣','背部中立，至少蹲到大腿平行地面','起立時吐氣，膝蓋不鎖死']},
+      {n:'槓鈴臀推',svg:'槓鈴臀推',ref:'https://www.worldgymtaiwan.com/training-blog-in/how-to-do-the-hip-thrust',tips:['肩胛骨上緣靠訓練凳，槓鈴放髖骨需墊護墊','推到頂端臀部夾緊，軀幹與地面平行','下降時臀部不完全觸地，保持張力']},
+      {n:'倒蹬腿推機',svg:'倒蹬',ref:'https://nuli.app/blog/gym-lowerlimbs/',tips:['腳放低股四頭為主；腳放高臀部更多','推出不鎖死膝蓋，保留5°彎曲','下降不超過大腿與腹部90°保護膝蓋']},
+      {n:'附身勾腿',svg:'附身勾腿',ref:'https://nuli.app/blog/gym-lowerlimbs/',tips:['俯臥骨盆輕壓墊子，腰部不後仰','勾起時腳跟往臀部靠，不要甩動','頂端停頓1秒，下放緩慢控制']},
+    ]
+  },
+  '核心': {
+    warmup:[
+      {n:'貓牛式',svg:'cat_cow',reps:'各10次',how:'四足跪地，交替拱背與塌腰，活動整條脊椎。配合呼吸節奏。'},
+      {n:'站姿側屈',svg:'arm_circle',reps:'每側10次',how:'雙腳與肩同寬，一手沿腿側往下滑，感受側腰活動。'},
+      {n:'弓步轉體',svg:'lunge_twist',reps:'每側10次',how:'踏出弓步後雙手往前腳方向轉體，活動胸椎。'},
+    ],
+    stretch:[
+      {n:'脊椎扭轉',svg:'spinal_twist',sec:30,muscle:'豎脊肌・胸椎',how:'仰躺，雙膝彎曲倒向一側，手臂平展，感受腰背扭轉拉伸。左右各30秒。',tip:'肩膀盡量貼地，配合深呼吸。'},
+      {n:'嬰兒式',svg:'child_pose',sec:45,muscle:'腰背・背闊肌',how:'跪姿，雙手向前伸展，上身壓低，額頭輕觸地面，感受背部拉伸。保持45秒。',tip:'臀部盡量坐向腳跟，雙手盡量往前伸。'},
+      {n:'眼鏡蛇式',svg:'cobra',sec:30,muscle:'腹部・腰椎',how:'俯臥，雙手放肩膀下方慢慢推起上身，感受腹部前側拉伸。保持30秒。',tip:'手肘可微彎，不要過度後仰壓迫腰部。'},
+      {n:'站姿前屈',svg:'forward_fold',sec:30,muscle:'下背・膕繩肌',how:'站姿雙腳與肩同寬，慢慢彎腰雙手往地板方向伸，感受下背拉伸。保持30秒。',tip:'膝蓋可微彎，讓背部充分放鬆。'},
+    ],
+    equipment:[
+      {n:'卷腹',svg:'卷腹',ref:'https://physicfit.com/crunch/',tips:['只需抬起肩胛骨離地，不是整個上身','雙手輕放耳後，不要拉脖子代償','呼氣收縮，速度慢，感受腹直肌緊繃']},
+      {n:'棒式平板',svg:'棒式',ref:'https://blog.worldgymtaiwan.com/plank-exercise-guide',tips:['前臂在肩正下方，頭腳保持一直線','核心向內收，想像肚臍吸向脊椎','正常呼吸，臀部不翹起也不塌陷']},
+      {n:'懸垂舉腿',svg:'懸垂舉腿',ref:'https://physicfit.com/hanging-leg-raise/',tips:['雙手緊握單槓，肩膀穩定不聳肩','用腹肌力量抬腿，不要甩動借力','進階可做直腿或加轉體']},
+    ]
+  }
+};
+
+// HOME EXERCISE VIDEOS
+const HOME_VIDEOS = {
+  '肩背':[
+    {t:'帕梅拉・肩背燃脂 15 分鐘',host:'Pamela Reif',dur:'15分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+shoulder+back+workout'},
+    {t:'劉耕宏・肩背訓練跟練',host:'劉耕宏',dur:'20分',url:'https://www.youtube.com/results?search_query=劉耕宏+肩背+訓練'},
+    {t:'周六野・背部緊實跟練',host:'周六野 Zoey',dur:'15分',url:'https://www.youtube.com/results?search_query=周六野+背部+訓練'},
+    {t:'韓小四・肩膀線條塑形',host:'韓小四',dur:'10分',url:'https://www.youtube.com/results?search_query=韓小四+肩膀+塑形'},
   ],
-  '臀腿': [
-    {n:'負重深蹲',muscle:'股四頭肌・臀大肌',vid:'https://www.youtube.com/results?search_query=深蹲教學+重訓姿勢',tips:['下蹲時膝蓋朝腳尖方向推出，不要內扣','背部中立，胸口朝前，至少蹲到大腿平行地面','起立時吐氣，不要讓膝蓋鎖死']},
-    {n:'保加利亞深蹲',muscle:'股四頭肌・臀大肌',vid:'https://www.youtube.com/results?search_query=保加利亞深蹲教學',tips:['前腳離椅子距離：下蹲時前腳膝蓋不超過腳尖太多','重心在前腳腳跟，上身微前傾','下蹲到後膝接近地面，感受前腳臀肌收縮']},
-    {n:'羅馬尼亞硬舉',muscle:'膕繩肌・臀大肌',vid:'https://www.youtube.com/results?search_query=羅馬尼亞硬舉教學+RDL',tips:['髖關節主導折疊，不是膝蓋彎曲','槓鈴貼著身體前側滑下去','下放到膕繩肌明顯拉伸即可，不強求觸地']},
-    {n:'倒蹬（腿推機）',muscle:'股四頭肌・臀大肌',vid:'https://www.youtube.com/results?search_query=腿推機教學+倒蹬',tips:['腳放低：股四頭為主；腳放高：臀部更多','推出不鎖死膝蓋，保留 5° 彎曲','下降不超過大腿與腹部 90° 保護膝蓋']},
-    {n:'附身勾腿',muscle:'膕繩肌',vid:'https://www.youtube.com/results?search_query=勾腿機教學+腿後側訓練',tips:['俯臥時骨盆輕壓墊子，腰部不後仰','勾起時腳跟往臀部靠，不要甩動','頂端停頓 1 秒，下放緩慢控制']},
-    {n:'槓鈴臀推',muscle:'臀大肌',vid:'https://www.youtube.com/results?search_query=臀推教學+槓鈴臀推',tips:['肩胛骨上緣靠訓練凳，槓鈴放髖骨位置記得墊護墊','推到頂端臀部夾緊，軀幹與地面平行','下降時臀部不完全觸地，保持持續張力']},
-    {n:'甩壺鈴',muscle:'臀大肌・膕繩肌・核心',vid:'https://www.youtube.com/results?search_query=壺鈴擺盪教學+Kettlebell+Swing',tips:['壺鈴盪回時做髖關節折疊 Hinge，不是深蹲','推出去時臀部完全夾緊，身體站直','壺鈴不高過肩膀，讓臀肌做功而不是手臂']},
-    {n:'山羊挺身',muscle:'豎脊肌・臀大肌',vid:'https://www.youtube.com/results?search_query=山羊挺身教學+下背訓練',tips:['腳踝固定在訓練台，膝蓋輕靠墊子','下降時脊椎自然彎曲','上升時從臀大肌與豎脊肌共同收縮開始']},
+  '臀腿':[
+    {t:'帕梅拉・臀腿燃脂跟練',host:'Pamela Reif',dur:'20分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+leg+butt+workout'},
+    {t:'劉耕宏・臀腿有氧跟練',host:'劉耕宏',dur:'25分',url:'https://www.youtube.com/results?search_query=劉耕宏+臀腿+訓練'},
+    {t:'周六野・翹臀塑形課',host:'周六野 Zoey',dur:'20分',url:'https://www.youtube.com/results?search_query=周六野+翹臀+訓練'},
+    {t:'韓小四・臀腿燃脂課',host:'韓小四',dur:'15分',url:'https://www.youtube.com/results?search_query=韓小四+臀腿+訓練'},
   ],
-  '核心': [
-    {n:'卷腹',muscle:'腹直肌',vid:'https://www.youtube.com/results?search_query=卷腹教學+腹肌訓練',tips:['只需抬起肩胛骨離地，不是整個上身','雙手輕放耳後，不要拉脖子代償','呼氣收縮，速度慢，感受腹直肌全程緊繃']},
-    {n:'棒式平板',muscle:'腹橫肌・核心',vid:'https://www.youtube.com/results?search_query=棒式平板支撐教學+Plank',tips:['前臂在肩正下方，從頭到腳跟保持一直線','核心向內收，想像肚臍吸向脊椎','正常呼吸，目視地板，臀部不翹起也不塌陷']},
-    {n:'懸垂舉腿',muscle:'下腹・髂腰肌',vid:'https://www.youtube.com/results?search_query=懸垂舉腿教學+腹部訓練',tips:['雙手緊握單槓，肩膀保持穩定不聳肩','用腹肌力量抬起雙腿，不要甩動借力','進階版可做直腿或加轉體']},
-    {n:'TRX',muscle:'全核心',vid:'https://www.youtube.com/results?search_query=TRX訓練教學+核心',tips:['確認懸掛點穩固，全程身體保持一直線','難度靠改變身體角度調整：越平行地面越難','配合呼吸節奏，動作中不要憋氣']},
+  '核心':[
+    {t:'帕梅拉・腹肌訓練跟練',host:'Pamela Reif',dur:'10分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+ab+workout'},
+    {t:'劉耕宏・核心燃脂課',host:'劉耕宏',dur:'15分',url:'https://www.youtube.com/results?search_query=劉耕宏+核心+腹肌'},
+    {t:'周六野・腰腹緊實訓練',host:'周六野 Zoey',dur:'10分',url:'https://www.youtube.com/results?search_query=周六野+腰腹+核心+訓練'},
+    {t:'韓小四・馬甲線課程',host:'韓小四',dur:'12分',url:'https://www.youtube.com/results?search_query=韓小四+腹肌+馬甲線'},
+  ],
+  '全身':[
+    {t:'帕梅拉・全身燃脂跟練',host:'Pamela Reif',dur:'25分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+full+body+workout'},
+    {t:'劉耕宏・全身有氧訓練',host:'劉耕宏',dur:'30分',url:'https://www.youtube.com/results?search_query=劉耕宏+全身+有氧'},
+    {t:'周六野・全身燃脂課',host:'周六野 Zoey',dur:'20分',url:'https://www.youtube.com/results?search_query=周六野+全身+燃脂'},
+    {t:'韓小四・全身塑形課',host:'韓小四',dur:'15分',url:'https://www.youtube.com/results?search_query=韓小四+全身+塑形'},
+  ],
+  '暖身':[
+    {t:'周六野・訓練前暖身',host:'周六野 Zoey',dur:'5分',url:'https://www.youtube.com/results?search_query=周六野+暖身+熱身'},
+    {t:'帕梅拉・全身暖身',host:'Pamela Reif',dur:'5分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+warm+up'},
+    {t:'韓小四・動態暖身跟練',host:'韓小四',dur:'8分',url:'https://www.youtube.com/results?search_query=韓小四+暖身+熱身'},
+  ],
+  '拉伸':[
+    {t:'周六野・全身拉伸收操',host:'周六野 Zoey',dur:'10分',url:'https://www.youtube.com/results?search_query=周六野+拉伸+收操'},
+    {t:'帕梅拉・訓練後拉伸',host:'Pamela Reif',dur:'10分',url:'https://www.youtube.com/results?search_query=Pamela+Reif+cool+down+stretch'},
+    {t:'劉耕宏・拉伸放鬆課',host:'劉耕宏',dur:'12分',url:'https://www.youtube.com/results?search_query=劉耕宏+拉伸+放鬆'},
+    {t:'凱蒂瑜伽・全身放鬆',host:'凱蒂瑜伽',dur:'20分',url:'https://www.youtube.com/results?search_query=凱蒂瑜伽+全身+拉伸+放鬆'},
   ],
 };
 
-const WARMUP_LIST = [
-  {n:'手臂大繞環',vid:'https://www.youtube.com/results?search_query=手臂繞環暖身動作',desc:'雙臂向前向後各做大圓繞環 10 次，活動肩關節與胸椎，預防肩部受傷。'},
-  {n:'髖關節繞圈',vid:'https://www.youtube.com/results?search_query=髖關節旋轉暖身動作',desc:'雙手叉腰，以髖部為中心順時針逆時針各繞 10 圈，啟動臀肌與髖屈肌群。'},
-  {n:'弓步轉體',vid:'https://www.youtube.com/results?search_query=弓步轉體暖身動作',desc:'踏出弓步後雙手往前腳方向轉體，每側 10 次，活動胸椎、髖部與膝蓋。'},
-  {n:'腿後擺踢',vid:'https://www.youtube.com/results?search_query=腿部擺踢熱身動作',desc:'扶牆單腳站立，另一腳前後大幅擺動 15 次，動態拉伸膕繩肌與髖屈肌群。'},
-  {n:'側弓步滑行',vid:'https://www.youtube.com/results?search_query=側弓步熱身動作',desc:'雙腳大步分開左右交替側弓步，每側 10 次，活化臀中肌與內收肌群。'},
-  {n:'貓牛式脊椎',vid:'https://www.youtube.com/results?search_query=貓牛式暖身動作',desc:'四足跪地，交替拱背與塌腰各 10 次，活動整條脊椎。'},
-  {n:'深蹲停留',vid:'https://www.youtube.com/results?search_query=深蹲熱身暖身',desc:'慢慢下蹲到底部，維持 5 秒再站起，啟動臀腿並熱身踝關節。'},
-];
+// Guide tab state
+let curGuideCat = '肩背胸';
+let curGuideTab = 'warmup'; // warmup | stretch | equipment
 
-const STRETCH_LIST = [
-  {n:'胸大肌門框拉伸',muscle:'胸大肌',vid:'https://www.youtube.com/results?search_query=胸大肌拉伸教學+收操',how:'站門框旁，手肘彎曲 90° 靠門框，身體緩慢向前傾，感受胸部前側拉伸。左右各 30–45 秒。',tip:'下巴保持水平，不要聳肩。'},
-  {n:'跨膝臀部拉伸',muscle:'臀大肌',vid:'https://www.youtube.com/results?search_query=臀大肌拉伸教學+收操',how:'仰躺，一腳踝架在另一腳大腿上，雙手抱住下方大腿往胸口拉。左右各 30–45 秒。',tip:'腰部貼地，背部放鬆。'},
-  {n:'膕繩肌抬腿拉伸',muscle:'膕繩肌',vid:'https://www.youtube.com/results?search_query=膕繩肌拉伸教學+大腿後側',how:'仰躺，一腿抬高膝蓋伸直，雙手扶大腿後側，感受大腿後側拉伸。左右各 30–45 秒。',tip:'腰部不離地，腿伸直但不鎖死膝蓋。'},
-  {n:'股四頭肌站姿拉伸',muscle:'股四頭肌',vid:'https://www.youtube.com/results?search_query=股四頭肌拉伸教學+大腿前側',how:'站姿，一手扶牆，另一手抓同側腳踝往臀部拉，膝蓋朝地板垂直。左右各 30–45 秒。',tip:'膝蓋靠攏，骨盆保持中立不翹臀。'},
-  {n:'背闊肌門把拉伸',muscle:'背闊肌',vid:'https://www.youtube.com/results?search_query=背闊肌拉伸教學+背部伸展',how:'握門把或柱子，身體重心往後坐，讓背部充分延伸，感受背側與腋下拉伸。左右各 30 秒。',tip:'彎曲膝蓋讓重心下沉效果更好。'},
-  {n:'三角肌跨胸拉伸',muscle:'三角肌・後三角',vid:'https://www.youtube.com/results?search_query=肩膀拉伸教學+三角肌收操',how:'一手橫過胸前，另一手在肘關節處往自身方向推壓，感受肩後側拉伸。左右各 30 秒。',tip:'肩膀放低，不要聳起。'},
-  {n:'髂腰肌弓步拉伸',muscle:'髂腰肌・髖屈肌',vid:'https://www.youtube.com/results?search_query=髂腰肌拉伸教學+髖屈肌伸展',how:'弓步跪姿，後腳膝蓋著地，重心往前下壓，感受後腳髖部前側拉伸。左右各 30–45 秒。',tip:'前腳膝蓋不超過腳尖，上身保持直立。'},
-  {n:'斜方肌頸部側拉',muscle:'斜方肌・頸部',vid:'https://www.youtube.com/results?search_query=頸部拉伸教學+斜方肌放鬆',how:'頭部緩慢往一側傾斜，耳朵靠向肩膀，可用手輕施壓力，感受頸側拉伸。左右各 20–30 秒。',tip:'動作緩慢，絕對不要用力猛拉。'},
-  {n:'脊椎扭轉放鬆',muscle:'豎脊肌・胸椎',vid:'https://www.youtube.com/results?search_query=脊椎扭轉拉伸教學+腰背放鬆',how:'仰躺，雙膝彎曲倒向一側，手臂平展，感受腰背扭轉拉伸。左右各 30–45 秒。',tip:'肩膀盡量貼地，配合深呼吸。'},
-  {n:'小腿踩牆拉伸',muscle:'小腿・比目魚肌',vid:'https://www.youtube.com/results?search_query=小腿拉伸教學+小腿放鬆',how:'一腳腳尖頂牆，腳跟貼地，膝蓋微彎，重心向前靠牆，感受小腿深層拉伸。左右各 30 秒。',tip:'重訓後小腿容易緊繃，別忘了拉伸。'},
-];
-
-let curExTipCat = '肩背胸';
-
-function renderStretch() {
-  renderExTipCats();
-  renderExTips();
-  renderWarmup();
-  renderStretchExercises();
+function renderStretch(){
+  // Main category tabs
+  const catsEl = document.getElementById('guideMainTabs');
+  if(catsEl){
+    let tabsHtml='';
+    GUIDE_CATS.forEach(function(c){tabsHtml+='<button onclick="swGuideCat(\''+c+'\')" style="flex-shrink:0;padding:7px 16px;border-radius:20px;font-size:0.78rem;font-weight:800;border:none;cursor:pointer;font-family:\'Nunito\',sans-serif;transition:all .18s;background:'+(c===curGuideCat?'linear-gradient(135deg,#7A5FAC,#9B80C8)':'var(--p3)')+';color:'+(c===curGuideCat?'#fff':'var(--text2)')+'">'+c+'</button>';});
+    catsEl.innerHTML=tabsHtml;
+  }
+  renderGuideContent();
 }
 
-function renderExTipCats() {
-  const el = document.getElementById('exTipCats');
-  if (!el) return;
-  el.innerHTML = Object.keys(EX_TIPS).map(cat =>
-    `<button onclick="swExTipCat('${cat}')" style="flex-shrink:0;padding:6px 14px;border-radius:16px;font-size:0.76rem;font-weight:800;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .18s;background:${cat===curExTipCat?'linear-gradient(135deg,#7A5FAC,#9B80C8)':'var(--p3)'};color:${cat===curExTipCat?'#fff':'var(--text2)'}">${cat}</button>`
-  ).join('');
-}
-function swExTipCat(cat){curExTipCat=cat;renderExTipCats();renderExTips();}
+function swGuideCat(cat){ curGuideCat=cat; curGuideTab='warmup'; renderStretch(); }
+function swGuideTab(tab){ curGuideTab=tab; renderGuideContent(); }
 
-function renderExTips(){
-  const el=document.getElementById('exTipList');if(!el)return;
-  const list=EX_TIPS[curExTipCat]||[];
-  el.innerHTML=list.map((ex,i)=>`
-    <div style="border:1.5px solid #EDE8F5;border-radius:12px;margin-bottom:8px;overflow:hidden">
-      <div onclick="toggleTip('ex',${i})" style="display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;background:#FAFAFA">
-        <div style="flex:1">
-          <div style="font-size:0.85rem;font-weight:800;color:var(--text)">${ex.n}</div>
-          <div style="font-size:0.64rem;font-weight:700;color:var(--accb);margin-top:2px">${ex.muscle}</div>
-        </div>
-        <a href="${ex.vid}" target="_blank" onclick="event.stopPropagation()" style="background:var(--p3);border:none;border-radius:8px;padding:4px 10px;font-size:0.68rem;font-weight:800;color:var(--acc);text-decoration:none;white-space:nowrap">觀看示範</a>
-        <span id="tipArrowex${i}" style="font-size:0.75rem;color:var(--text2);transition:transform .2s;margin-left:4px">▸</span>
-      </div>
-      <div id="tipBodyex${i}" style="display:none;padding:0 13px 12px;background:#fff">
-        ${ex.tips.map(t=>`<div style="display:flex;gap:8px;padding:7px 0;border-top:1px solid #F5F0FC"><div style="width:4px;height:4px;background:var(--accb);border-radius:50%;margin-top:7px;flex-shrink:0"></div><div style="font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.65">${t}</div></div>`).join('')}
-      </div>
-    </div>`).join('');
+function renderGuideContent(){
+  var el=document.getElementById('guideContent');
+  if(!el)return;
+  var data=GUIDE_DATA[curGuideCat];
+  if(!data)return;
+
+  var tabDefs=[{id:'warmup',label:'暖身動作'},{id:'stretch',label:'拉伸動作'},{id:'equipment',label:'器械使用'}];
+  var tabHtml='<div style="display:flex;gap:6px;padding:0 12px 10px">';
+  for(var ti=0;ti<tabDefs.length;ti++){
+    var tb=tabDefs[ti];
+    var act=tb.id===curGuideTab;
+    tabHtml+='<button onclick="swGuideTab(\''+tb.id+'\')" style="flex:1;padding:8px 6px;border-radius:12px;font-size:0.74rem;font-weight:800;border:none;cursor:pointer;font-family:\'Nunito\',sans-serif;background:'+(act?'#fff':'transparent')+';color:'+(act?'var(--acc)':'var(--text2)')+';box-shadow:'+(act?'0 2px 8px rgba(122,95,172,0.15)':'')+';transition:all .18s">'+tb.label+'</button>';
+  }
+  tabHtml+='</div>';
+
+  var cardHtml='<div class="card" style="padding:14px">';
+
+  if(curGuideTab==='warmup'){
+    cardHtml+='<div style="font-size:0.72rem;color:var(--text2);font-weight:600;margin-bottom:12px;line-height:1.6">訓練前 3–5 分鐘，每個動作連續做完，提升體溫與肌肉活性。</div>';
+    for(var wi=0;wi<data.warmup.length;wi++){
+      var wm=data.warmup[wi];
+      var bdr=wi>0?'border-top:1px solid #F5F0FC':'';
+      cardHtml+='<div style="'+bdr+'">'
+        +'<div onclick="toggleGuideItem(\'w\','+wi+')" style="display:flex;align-items:center;gap:12px;padding:12px 0;cursor:pointer">'
+          +'<div style="width:52px;height:52px;border-radius:50%;background:#F5F0F0;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden">'+(SSVG[wm.svg]||'')+'</div>'
+          +'<div style="flex:1"><div style="font-size:0.86rem;font-weight:800;color:var(--text)">'+wm.n+'</div><div style="font-size:0.7rem;color:var(--text2);font-weight:600;margin-top:2px">'+wm.reps+'</div></div>'
+          +'<span id="gArroww'+wi+'" style="font-size:0.75rem;color:var(--text2);transition:transform .2s">▸</span>'
+        +'</div>'
+        +'<div id="gBodyw'+wi+'" style="display:none;padding:0 0 12px 64px;font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.7">'+wm.how+'</div>'
+      +'</div>';
+    }
+  } else if(curGuideTab==='stretch'){
+    cardHtml+='<div style="font-size:0.72rem;color:var(--text2);font-weight:600;margin-bottom:12px;line-height:1.6">訓練後每個姿勢維持 30–45 秒，自然呼吸，不要憋氣。</div>';
+    for(var si=0;si<data.stretch.length;si++){
+      var sm=data.stretch[si];
+      var bdr2=si>0?'border-top:1px solid #F5F0FC':'';
+      cardHtml+='<div style="'+bdr2+'">'
+        +'<div onclick="toggleGuideItem(\'s\','+si+')" style="display:flex;align-items:center;gap:12px;padding:12px 0;cursor:pointer">'
+          +'<div style="width:52px;height:52px;border-radius:50%;background:#F0EBF8;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden">'+(SSVG[sm.svg]||'')+'</div>'
+          +'<div style="flex:1"><div style="font-size:0.86rem;font-weight:800;color:var(--text)">'+sm.n+'</div><div style="font-size:0.68rem;font-weight:700;color:var(--accb);margin-top:2px">'+sm.muscle+'</div><div style="font-size:0.7rem;color:var(--text2);font-weight:600;margin-top:1px">'+sm.sec+'秒</div></div>'
+          +'<span id="gArrows'+si+'" style="font-size:0.75rem;color:var(--text2);transition:transform .2s">▸</span>'
+        +'</div>'
+        +'<div id="gBodys'+si+'" style="display:none;padding:0 0 12px 64px">'
+          +'<div style="font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:6px">'+sm.how+'</div>'
+          +'<div style="background:#F0EBF8;border-radius:8px;padding:6px 10px;font-size:0.73rem;font-weight:700;color:#7A5FAC">'+sm.tip+'</div>'
+        +'</div>'
+      +'</div>';
+    }
+  } else if(curGuideTab==='equipment'){
+    cardHtml+='<div style="font-size:0.72rem;color:var(--text2);font-weight:600;margin-bottom:12px;line-height:1.6">點擊展開查看器械使用要點，點「台灣教學資料」看完整教學。</div>';
+    for(var ei=0;ei<data.equipment.length;ei++){
+      var em=data.equipment[ei];
+      var bdr3=ei>0?'border-top:1px solid #F5F0FC':'';
+      var tipsHtml='';
+      for(var eti=0;eti<em.tips.length;eti++){
+        tipsHtml+='<div style="display:flex;gap:8px;padding:5px 0;border-top:1px solid #F5F0FC"><div style="width:4px;height:4px;background:var(--accb);border-radius:50%;margin-top:7px;flex-shrink:0"></div><div style="font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.65">'+em.tips[eti]+'</div></div>';
+      }
+      var refBtn=em.ref?'<a href="'+em.ref+'" target="_blank" style="display:inline-block;margin-top:8px;background:var(--p3);border-radius:8px;padding:5px 12px;font-size:0.7rem;font-weight:800;color:var(--acc);text-decoration:none">台灣教學資料 →</a>':'';
+      cardHtml+='<div style="'+bdr3+'">'
+        +'<div onclick="toggleGuideItem(\'e\','+ei+')" style="display:flex;align-items:center;gap:12px;padding:12px 0;cursor:pointer">'
+          +'<div style="width:52px;height:52px;border-radius:10px;background:#FAFAFA;border:1.5px solid #EDE8F5;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;overflow:hidden">'+(EQUIP_SVG[em.svg]||'')+'</div>'
+          +'<div style="flex:1;font-size:0.86rem;font-weight:800;color:var(--text)">'+em.n+'</div>'
+          +'<span id="gArrowe'+ei+'" style="font-size:0.75rem;color:var(--text2);transition:transform .2s">▸</span>'
+        +'</div>'
+        +'<div id="gBodye'+ei+'" style="display:none;padding:0 0 12px 64px">'+tipsHtml+refBtn+'</div>'
+      +'</div>';
+    }
+  }
+
+  cardHtml+='</div>';
+  el.innerHTML=tabHtml+cardHtml;
 }
 
-function renderWarmup(){
-  const el=document.getElementById('warmupList');if(!el)return;
-  el.innerHTML=WARMUP_LIST.map((w,i)=>`
-    <div style="border:1.5px solid #EDE8F5;border-radius:12px;margin-bottom:8px;overflow:hidden">
-      <div onclick="toggleTip('wu',${i})" style="display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;background:#FAFAFA">
-        <div style="flex:1;font-size:0.85rem;font-weight:800;color:var(--text)">${w.n}</div>
-        <a href="${w.vid}" target="_blank" onclick="event.stopPropagation()" style="background:var(--p3);border:none;border-radius:8px;padding:4px 10px;font-size:0.68rem;font-weight:800;color:var(--acc);text-decoration:none;white-space:nowrap">觀看示範</a>
-        <span id="tipArrowwu${i}" style="font-size:0.75rem;color:var(--text2);transition:transform .2s;margin-left:4px">▸</span>
-      </div>
-      <div id="tipBodywu${i}" style="display:none;padding:8px 13px 12px;background:#fff;font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.7">${w.desc}</div>
-    </div>`).join('');
-}
-
-function renderStretchExercises(){
-  const el=document.getElementById('stretchList');if(!el)return;
-  el.innerHTML=STRETCH_LIST.map((s,i)=>`
-    <div style="border:1.5px solid #EDE8F5;border-radius:12px;margin-bottom:8px;overflow:hidden">
-      <div onclick="toggleTip('st',${i})" style="display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;background:#FAFAFA">
-        <div style="flex:1">
-          <div style="font-size:0.85rem;font-weight:800;color:var(--text)">${s.n}</div>
-          <div style="font-size:0.64rem;font-weight:700;color:var(--accb);margin-top:2px">${s.muscle}</div>
-        </div>
-        <a href="${s.vid}" target="_blank" onclick="event.stopPropagation()" style="background:var(--p3);border:none;border-radius:8px;padding:4px 10px;font-size:0.68rem;font-weight:800;color:var(--acc);text-decoration:none;white-space:nowrap">觀看示範</a>
-        <span id="tipArrowst${i}" style="font-size:0.75rem;color:var(--text2);transition:transform .2s;margin-left:4px">▸</span>
-      </div>
-      <div id="tipBodyst${i}" style="display:none;padding:8px 13px 12px;background:#fff">
-        <div style="font-size:0.79rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:7px">${s.how}</div>
-        <div style="background:#F0EBF8;border-radius:8px;padding:6px 10px;font-size:0.73rem;font-weight:700;color:#7A5FAC">${s.tip}</div>
-      </div>
-    </div>`).join('');
-}
-
-function toggleTip(prefix,i){
-  const body=document.getElementById('tipBody'+prefix+i);
-  const arrow=document.getElementById('tipArrow'+prefix+i);
+function toggleGuideItem(prefix,i){
+  const body=document.getElementById('gBody'+prefix+i);
+  const arrow=document.getElementById('gArrow'+prefix+i);
   if(!body)return;
   const open=body.style.display==='block';
   body.style.display=open?'none':'block';
   if(arrow)arrow.style.transform=open?'':'rotate(90deg)';
+}
+
+// ── HOME EXERCISE LOGIC ──
+let homeSelParts=[];
+let homeSelDur=0;
+
+function toggleHomePart(btn,part){
+  const idx=homeSelParts.indexOf(part);
+  if(idx>=0){
+    homeSelParts.splice(idx,1);
+    btn.style.background='var(--p3)';btn.style.color='var(--text2)';btn.style.borderColor='#EDE8F5';
+  } else {
+    homeSelParts.push(part);
+    btn.style.background='linear-gradient(135deg,#7A5FAC,#9B80C8)';btn.style.color='#fff';btn.style.borderColor='#7A5FAC';
+  }
+  updateHomeExResults();
+}
+function setHomeDur(btn,dur){
+  homeSelDur=dur;
+  document.querySelectorAll('.home-dur-btn').forEach(b=>{b.style.background='var(--p3)';b.style.color='var(--text2)';b.style.borderColor='#EDE8F5';});
+  btn.style.background='linear-gradient(135deg,#7A5FAC,#9B80C8)';btn.style.color='#fff';btn.style.borderColor='#7A5FAC';
+  updateHomeExResults();
+}
+function updateHomeExResults(){
+  const resEl=document.getElementById('homeExResults');
+  const listEl=document.getElementById('homeExList');
+  if(!resEl||!listEl)return;
+  if(!homeSelParts.length){resEl.style.display='none';return;}
+  resEl.style.display='block';
+  // Collect videos for selected parts
+  let allVids=[];
+  homeSelParts.forEach(part=>{
+    const key=Object.keys(HOME_VIDEOS).find(k=>k===part)||(part==='肩背'?'肩背':part);
+    if(HOME_VIDEOS[key]) allVids=[...allVids,...HOME_VIDEOS[key].map(v=>({...v,cat:part}))];
+  });
+  // Also add warmup/stretch suggestions
+  const extras=[...HOME_VIDEOS['暖身'].slice(0,1),...HOME_VIDEOS['拉伸'].slice(0,1)];
+  listEl.innerHTML=[...allVids,...extras].map(v=>`
+    <a href="${v.url}" target="_blank" style="display:flex;align-items:center;gap:10px;text-decoration:none;background:#F9F7FD;border-radius:12px;padding:11px 13px;margin-bottom:6px;border:1.5px solid #EDE8F5">
+      <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#7A5FAC,#9B80C8);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem">▶</div>
+      <div style="flex:1">
+        <div style="font-size:0.8rem;font-weight:800;color:var(--text);line-height:1.3">${v.t}</div>
+        <div style="font-size:0.66rem;color:var(--text2);font-weight:600;margin-top:2px">${v.host}${v.dur?' · '+v.dur:''}</div>
+      </div>
+      <span style="font-size:0.7rem;color:var(--accb)">→</span>
+    </a>`).join('');
+}
+
+// Also handle 居家跟練 in workout cat tabs
+function renderHomeExTab(){
+  // Show home exercise tab in workout section
+  const allCats=[...Object.keys(getEX()),'居家跟練','＋ 自訂'];
+  document.getElementById('catTabs').innerHTML=allCats.map(c=>
+    `<button class="ctab${c===curCat?' active':''}" onclick="swCat('${c}')">${c}</button>`).join('');
+  if(curCat==='居家跟練') renderHomeVideoList();
+  else renderEx();
+}
+
+function renderHomeVideoList(){
+  const cats=['肩背','臀腿','核心','全身','暖身','拉伸'];
+  let catBtns='';
+  cats.forEach(c=>{catBtns+='<button onclick="swHomeVidCat(\''+c+'\')" id="hvc_'+c+'" style="flex-shrink:0;padding:6px 13px;border-radius:16px;font-size:0.76rem;font-weight:800;border:none;cursor:pointer;font-family:\'Nunito\',sans-serif;background:'+(c==='肩背'?'linear-gradient(135deg,#7A5FAC,#9B80C8)':'var(--p3)')+';color:'+(c==='肩背'?'#fff':'var(--text2)')+'">'+c+'</button>';});
+  let html='<div style="margin-bottom:10px"><div style="display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none" id="homeVidCats">'+catBtns+'</div></div><div id="homeVidList"></div>';
+  document.getElementById('exList').innerHTML=html;
+  renderHomeVidList('肩背');
+}
+let curHomeVidCat='肩背';
+function swHomeVidCat(cat){
+  curHomeVidCat=cat;
+  document.querySelectorAll('[id^="hvc_"]').forEach(b=>{const c=b.id.replace('hvc_','');b.style.background=c===cat?'linear-gradient(135deg,#7A5FAC,#9B80C8)':'var(--p3)';b.style.color=c===cat?'#fff':'var(--text2)';});
+  renderHomeVidList(cat);
+}
+function renderHomeVidList(cat){
+  const el=document.getElementById('homeVidList');if(!el)return;
+  const vids=HOME_VIDEOS[cat]||[];
+  el.innerHTML=vids.map(v=>`
+    <a href="${v.url}" target="_blank" style="display:flex;align-items:center;gap:10px;text-decoration:none;background:#F9F7FD;border-radius:12px;padding:11px 13px;margin-bottom:6px;border:1.5px solid #EDE8F5">
+      <div style="width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,#7A5FAC,#9B80C8);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;color:#fff">▶</div>
+      <div style="flex:1">
+        <div style="font-size:0.82rem;font-weight:800;color:var(--text);line-height:1.3">${v.t}</div>
+        <div style="font-size:0.66rem;color:var(--text2);font-weight:600;margin-top:2px">${v.host}${v.dur?' · '+v.dur:''}</div>
+      </div>
+      <span style="font-size:0.7rem;color:var(--accb)">→</span>
+    </a>`).join('');
 }
 
 function init(){
@@ -708,7 +923,7 @@ function getWeekDays(){const ws=getWkS();return Array.from({length:7},(_,i)=>{co
 function renderWeek(){const td=today();const days=getWeekDays();if(!selWkDay)selWkDay=td;const tabsEl=document.getElementById('wkDayTabs');if(tabsEl){tabsEl.innerHTML=days.map(d=>{const ds=dateStr(d);const log=S.logs.find(l=>l.date===ds);const plan=S.weekPlan[ds];const isActive=ds===selWkDay,isToday=ds===td;let tabClass='wk-day-tab';if(log)tabClass+=' has-done';else if(plan?.acts?.length)tabClass+=' has-plan';if(isActive)tabClass+=' active';return `<div class="${tabClass}" onclick="selectWkDay('${ds}')"><div class="wdt-wd">${DZHT[d.getDay()]}${isToday?'·今':''}</div><div class="wdt-d">${d.getDate()}</div><div class="wdt-dot"></div></div>`;}).join('');}renderWkTodo();const ws=getWkS();const el=document.getElementById('wkSum');if(el){let totalKcal=0,completedDays=0;S.logs.filter(l=>{const ld=new Date(l.date+'T00:00:00');return ld>=ws&&l.date<=today();}).forEach(l=>{if(isDayFullyComplete(l.date)){completedDays++;totalKcal+=l.kcal||0;}});el.textContent=`${completedDays}天・${totalKcal}kcal`;}}
 function selectWkDay(ds){selWkDay=ds;renderWeek();const el=document.getElementById('saveTargetLabel');if(el){const td=today();if(ds===td){el.textContent='今天';}else{const d=new Date(ds+'T00:00:00');el.textContent=`${d.getMonth()+1}/${d.getDate()} ${DZHT[d.getDay()]}`;}};}
 function renderWkTodo(){const el=document.getElementById('wkTodoList');if(!el||!selWkDay)return;const ds=selWkDay;const td=today();const isPast=new Date(ds)<new Date(td+'T00:00:00');const log=S.logs.find(l=>l.date===ds);const plan=S.weekPlan[ds];let items=[];if(log?.sessions){log.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}${s.extra?' ('+s.extra+')':''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:true});else if(s.type==='pilates')items.push({title:`皮拉提斯${s.area?' · '+s.area:''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:true});else if(s.type==='weights'&&s.exDetails?.length)s.exDetails.forEach(ex=>{const setsStr=ex.sets?.length>0?ex.sets.map((st)=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join(' '):`${ex.sc||3}組×${ex.r||12}次`;items.push({title:ex.n,sub:setsStr,done:true});});});}else if(plan?.sessions?.length){plan.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='pilates')items.push({title:`皮拉提斯${s.area?' · '+s.area:''}`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='weights')items.push({title:'重訓',sub:'今日計劃',done:false});});}else if(plan?.acts?.length){plan.acts.forEach(act=>{items.push({title:act,sub:'今日計劃',done:false});});}const isEmpty=items.length===0;let html='';if(log&&log.kcal){const cats=[...new Set((log.sessions||[]).filter(s=>s.type==='weights').flatMap(s=>s.cats||[]))];const planChk=plan?.checked||{};const hasAnyChecked=Object.values(planChk).some(v=>v===true);const shownKcal=hasAnyChecked?log.kcal:0;html+=`<div style="background:linear-gradient(135deg,#7A5FAC,#9B80C8);border-radius:14px;padding:13px 16px;margin-bottom:10px;cursor:pointer" onclick="openDayCard('${ds}')"><div style="font-size:0.6rem;font-weight:800;color:rgba(255,255,255,0.65);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px">${hasAnyChecked?'訓練完成 · 點擊查看':'已記錄 · 請打勾確認完成'}</div><div style="display:flex;align-items:center;gap:12px"><div><div style="font-size:1.6rem;font-weight:900;color:#fff;line-height:1">${shownKcal}</div><div style="font-size:0.58rem;color:rgba(255,255,255,0.7);font-weight:700">kcal</div></div>${log.dur?`<div><div style="font-size:1.2rem;font-weight:900;color:rgba(255,255,255,.8);line-height:1">${log.dur}</div><div style="font-size:0.58rem;color:rgba(255,255,255,0.7);font-weight:700">分鐘</div></div>`:''}<div style="flex:1;text-align:right;display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap">${cats.map(c=>`<span style="background:rgba(255,255,255,0.2);color:#fff;border-radius:6px;padding:2px 7px;font-size:0.62rem;font-weight:800">${c}</span>`).join('')}</div></div></div>`;}else if(plan?.acts?.length){html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #F0EBF8"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">已安排計劃</div></div>`;}items.forEach((item,i)=>{const isChecked=(plan?.checked||{})[i]===true;html+=`<div class="plan-item${isChecked?' checked':''}"><div class="plan-item-check" onclick="togglePlanCheck('${ds}',${i})"></div><div style="flex:1"><div class="plan-item-label">${item.title}</div>${item.sub?`<div style="font-size:0.66rem;color:var(--text2);font-weight:600;margin-top:1px">${item.sub}</div>`:''}</div><button class="plan-item-del" onclick="deletePlanItem('${ds}',${i})" title="移除">✕</button></div>`;});if(isEmpty){html=`<div style="font-size:0.8rem;color:var(--text2);font-weight:600;padding:8px 0">${isPast?'這天沒有訓練記錄':'今天還沒有訓練，開始記錄吧！'}</div>`;}if(log&&items.length>0){const allChk=items.every((_,i)=>(plan?.checked||{})[i]===true);if(!allChk){html+=`<button onclick="markAllDone('${ds}')" style="margin-top:8px;width:100%;background:#F0EBF8;border:1.5px solid #C4AEE0;border-radius:10px;padding:9px;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;color:#7A5FAC">✓ 全部完成</button>`;}}el.innerHTML=html;}
-function renderWo(){EX=getEX();const cats=[...Object.keys(EX),'＋ 自訂'];document.getElementById('catTabs').innerHTML=cats.map(c=>`<button class="ctab${c===curCat?' active':''}" onclick="swCat('${c}')">${c}</button>`).join('');renderEx();}
+function renderWo(){EX=getEX();const cats=[...Object.keys(EX),'居家跟練','＋ 自訂'];document.getElementById('catTabs').innerHTML=cats.map(c=>`<button class="ctab${c===curCat?' active':''}" onclick="swCat('${c}')">${c}</button>`).join('');if(curCat==='居家跟練')renderHomeVideoList();else renderEx();}
 function swCat(c){if(c==='＋ 自訂'){openAddExModal();return;}curCat=c;renderWo();}
 function renderEx(){EX=getEX();document.getElementById('exList').innerHTML=(EX[curCat]||[]).map(ex=>{const sel=selEx[ex.id],sets=sel?.sets||[];const svgIcon=EX_SVG[ex.id]||'';return `<div class="exc${sel?' sel':''}" id="ec-${ex.id}" onclick="togEx('${ex.id}')"><div class="ex-h">${svgIcon?`<div style="width:48px;height:48px;flex-shrink:0;background:#F0EBF8;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:3px;overflow:hidden">${svgIcon}</div>`:''}<div class="ex-inf"><div class="ex-n">${ex.n}</div><div class="ex-m">${ex.m||''}</div></div></div>${sel?`<div class="ex-ctrls" onclick="event.stopPropagation()"><div class="exc-c"><label>重量</label><select onchange="uf('${ex.id}','w',this.value)">${ex.w.map(w=>`<option value="${w}"${sel.w==w?' selected':''}>${w}${typeof w==='number'?'kg':''}</option>`).join('')}</select></div><div class="exc-c"><label>次數</label><input type="number" value="${sel.r||12}" min="1" max="100" onchange="uf('${ex.id}','r',this.value)" onclick="event.stopPropagation()"></div><div class="exc-c"><label>組數</label><input type="number" value="${sel.sc||3}" min="1" max="20" onchange="uf('${ex.id}','sc',this.value)" onclick="event.stopPropagation()"></div></div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><button class="add-set-btn" style="flex:1" onclick="event.stopPropagation();logSet('${ex.id}')">＋ 記錄這組</button>${sets.length?`<div style="background:#EDE6F8;border-radius:8px;padding:5px 10px;font-size:0.75rem;font-weight:800;color:#7A5FAC;white-space:nowrap">✓ ${sets.length} 組已記錄</div>`:''}</div>${sets.length?`<div style="margin-top:5px;font-size:0.68rem;color:var(--text2);font-weight:600;line-height:1.6">${sets.map(s=>`${s.w}${typeof s.w==='number'?'kg':''}×${s.r}`).join('　')}</div>`:''}`:''}    </div>`;}).join('');updateAllKcal();}
 function togEx(id){if(selEx[id]){delete selEx[id];}else{EX=getEX();const ex=(EX[curCat]||[]).find(e=>e.id===id);if(!ex)return;selEx[id]={n:ex.n,w:ex.w[0],r:12,sc:3,sets:[]};}renderEx();}
@@ -747,11 +962,55 @@ function applyFoodOverrides(){const overrides=gd('foodOverrides',{});Object.entr
 const ENCOURAGEMENTS=[{e:'🔥',t:'You showed up',s:'今天的你，選擇了成為更好的自己'},{e:'💜',t:'Well done, Sovereign',s:'每一次訓練都是對生命的承諾'},{e:'⚡',t:'Power through',s:'汗水是努力最美的證明'},{e:'🌙',t:'Strength grows',s:'休息與訓練同樣重要，好好恢復'},{e:'🏆',t:'Progress made',s:'不是比昨天快，是比昨天更完整'},{e:'🌸',t:'Mind & Body',s:'身體在進化，意志也在淬煉'},{e:'✨',t:'Sovereign move',s:'掌握今天，就是掌握自己的人生'}];
 const COMPLETION_QUOTES=['每次訓練結束，你都離目標更近一步。','今天的痠痛，是明天進步的基礎。','你不需要完美，你只需要持續。','最難的不是訓練本身，是每次決定開始。你做到了。','肌肉是用意志建造的，今天你又加了一塊磚。','一個月後的你，會感謝今天沒有放棄的自己。','強壯不只是體力，更是日復一日選擇出現的能力。'];
 let aiOverrideKcal=null;
-function showCompletionModal(log,xp){const enc=ENCOURAGEMENTS[Math.floor(Math.random()*ENCOURAGEMENTS.length)];const quote=COMPLETION_QUOTES[Math.floor(Math.random()*COMPLETION_QUOTES.length)];document.getElementById('completionEmoji').textContent=enc.e;document.getElementById('completionTitle').textContent=enc.t;document.getElementById('completionSubtitle').textContent=enc.s;document.getElementById('completionQuote').textContent=quote;const statsEl=document.getElementById('completionStats');statsEl.innerHTML=[{v:log.kcal||0,l:'消耗 kcal'},{v:log.dur||0,l:'總分鐘'},{v:`+${xp}`,l:'XP 獲得'}].map(s=>`<div style="background:var(--p3);border-radius:11px;padding:10px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#7A5FAC">${s.v}</div><div style="font-size:0.62rem;font-weight:700;color:var(--text2)">${s.l}</div></div>`).join('');let html='';if(log.sessions?.length){log.sessions.forEach(s=>{if(s.type==='aerobic'){const extra=s.extra?` (${s.extra})`:'';html+=`<div style="background:var(--b3);border-radius:10px;padding:9px 12px;margin-bottom:5px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">${s.act}${extra}</div><div style="font-size:0.72rem;color:var(--text2);margin-top:2px">${s.dur} 分鐘・${s.kcal} kcal</div></div>`;}else if(s.type==='pilates'){const area=s.area?` · ${s.area}`:'';html+=`<div style="background:var(--b3);border-radius:10px;padding:9px 12px;margin-bottom:5px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">皮拉提斯${area}</div><div style="font-size:0.72rem;color:var(--text2);margin-top:2px">${s.dur} 分鐘・${s.kcal} kcal</div></div>`;}else if(s.type==='weights'&&s.exDetails?.length){const cats=[...new Set(s.cats||[])];html+=`<div style="background:var(--p3);border-radius:10px;padding:9px 12px;margin-bottom:5px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">重訓</div>${cats.map(c=>`<span style="background:#EDE6F8;color:#7A5FAC;border-radius:6px;padding:2px 8px;font-size:0.66rem;font-weight:800">${c}</span>`).join('')}</div>`;s.exDetails.forEach(ex=>{const muscle=ex.m||'';if(ex.sets?.length){const setsStr=ex.sets.map(st=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join('　');html+=`<div style="margin-bottom:4px"><div style="font-size:0.78rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.68rem;color:var(--text2)">${muscle?muscle+' · ':''}${setsStr}</div></div>`;}else{html+=`<div style="margin-bottom:4px"><div style="font-size:0.78rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.68rem;color:var(--text2)">${muscle?muscle+' · ':''}${ex.sc||3}組×${ex.r||12}次</div></div>`;}});html+='</div>';}})}document.getElementById('completionSessions').innerHTML=html;document.getElementById('completionMo').classList.add('open');}
+function showCompletionModal(log,xp){const enc=ENCOURAGEMENTS[Math.floor(Math.random()*ENCOURAGEMENTS.length)];const quote=COMPLETION_QUOTES[Math.floor(Math.random()*COMPLETION_QUOTES.length)];document.getElementById('completionEmoji').textContent=enc.e;document.getElementById('completionTitle').textContent=enc.t;document.getElementById('completionSubtitle').textContent=enc.s;document.getElementById('completionQuote').textContent=quote;const statsEl=document.getElementById('completionStats');statsEl.innerHTML=[{v:log.kcal||0,l:'消耗 kcal'},{v:log.dur||0,l:'總分鐘'},{v:`+${xp}`,l:'XP 獲得'}  ].map(s=>`<div style="background:#F5F0FC;border-radius:11px;padding:10px;text-align:center;border:1px solid #EDE8F5"><div style="font-size:1.5rem;font-weight:900;color:var(--acc)">${s.v}</div><div style="font-size:0.62rem;font-weight:700;color:var(--text2);margin-top:2px">${s.l}</div></div>`).join('');let html='';if(log.sessions?.length){log.sessions.forEach(s=>{if(s.type==='aerobic'){const extra=s.extra?` (${s.extra})`:'';html+=`<div style="background:var(--b3);border-radius:10px;padding:9px 12px;margin-bottom:5px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">${s.act}${extra}</div><div style="font-size:0.72rem;color:var(--text2);margin-top:2px">${s.dur} 分鐘・${s.kcal} kcal</div></div>`;}else if(s.type==='pilates'){const area=s.area?` · ${s.area}`:'';html+=`<div style="background:var(--b3);border-radius:10px;padding:9px 12px;margin-bottom:5px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">皮拉提斯${area}</div><div style="font-size:0.72rem;color:var(--text2);margin-top:2px">${s.dur} 分鐘・${s.kcal} kcal</div></div>`;}else if(s.type==='weights'&&s.exDetails?.length){const cats=[...new Set(s.cats||[])];html+=`<div style="background:#F9F7FD;border-radius:10px;padding:9px 12px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="font-size:0.82rem;font-weight:800;color:var(--text)">重訓</div>${cats.map(c=>`<span style="background:#EDE6F8;color:#7A5FAC;border-radius:6px;padding:2px 8px;font-size:0.66rem;font-weight:800">${c}</span>`).join('')}</div>`;s.exDetails.forEach(ex=>{const muscle=ex.m||'';if(ex.sets?.length){const setsStr=ex.sets.map(st=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join('　');html+=`<div style="margin-bottom:4px"><div style="font-size:0.78rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.68rem;color:var(--text2)">${muscle?muscle+' · ':''}${setsStr}</div></div>`;}else{html+=`<div style="margin-bottom:4px"><div style="font-size:0.78rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.68rem;color:var(--text2)">${muscle?muscle+' · ':''}${ex.sc||3}組×${ex.r||12}次</div></div>`;}});html+='</div>';}})}document.getElementById('completionSessions').innerHTML=html;document.getElementById('completionMo').classList.add('open');}
 function togglePlanCheck(ds,idx){if(!S.weekPlan[ds])S.weekPlan[ds]={acts:[],checked:{}};const plan=S.weekPlan[ds];if(!plan.checked)plan.checked={};const k=String(idx);plan.checked[k]=plan.checked[k]!==true;sd('weekPlan',S.weekPlan);renderWeek();updateHdr();if(plan.checked[k]===true&&isDayFullyComplete(ds)){setTimeout(()=>openDayCard(ds),400);}}
-function buildTodoItems(ds,log,plan){const items=[];if(log?.sessions){log.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}${s.extra?' ('+s.extra+')':''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:false,kcal:s.kcal||0});else if(s.type==='pilates')items.push({title:`皮拉提斯${s.area?' · '+s.area:''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:false,kcal:s.kcal||0});else if(s.type==='weights'&&s.exDetails?.length)s.exDetails.forEach(ex=>{const setsStr=ex.sets?.length>0?ex.sets.map((st)=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join(' '):`${ex.sc||3}組×${ex.r||12}次`;items.push({title:ex.n,sub:setsStr,done:false,kcal:0});});});}else if(plan?.sessions?.length){plan.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='pilates')items.push({title:`皮拉提斯`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='weights')items.push({title:'重訓',sub:'今日計劃',done:false});});}else if(plan?.acts?.length){plan.acts.forEach(act=>items.push({title:act,sub:'今日計劃',done:false}));}return items;}
-function deletePlanItem(ds,idx){const plan=S.weekPlan[ds];if(!plan)return;if(plan.acts?.length>idx)plan.acts.splice(idx,1);if(plan.checked)delete plan.checked[idx];if(!plan.acts?.length)delete S.weekPlan[ds];sd('weekPlan',S.weekPlan);renderWeek();toast('已刪除');}
-function openDayCard(ds){const log=S.logs.find(l=>l.date===ds);if(!log)return;const d=new Date(ds+'T00:00:00');document.getElementById('dcName').textContent=S.name||'Glow Burn';document.getElementById('dcDate').textContent=d.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});const dcEmojis=['💪','🔥','⚡','🌟','🏆','✨'];document.getElementById('dcEmoji').textContent=dcEmojis[Math.floor(Math.random()*dcEmojis.length)];document.getElementById('dcStats').innerHTML=[{v:log.kcal||0,l:'消耗 kcal'},{v:log.dur||0,l:'分鐘'},{v:(log.sessions||[]).reduce((s,se)=>s+(se.type==='weights'?se.exDetails?.length||0:1),0)||0,l:'訓練項目'}].map(s=>`<div style="background:var(--p3);border-radius:11px;padding:10px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#7A5FAC">${s.v}</div><div style="font-size:0.58rem;font-weight:700;color:var(--text2);margin-top:2px">${s.l}</div></div>`).join('');let html='';(log.sessions||[]).forEach(s=>{if(s.type==='aerobic'){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">${s.act}${s.extra?' ('+s.extra+')':''}</div><div style="font-size:0.68rem;color:var(--text2);margin-top:1px">${s.dur}分 · ${s.kcal}kcal</div></div>`;}else if(s.type==='pilates'){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">皮拉提斯${s.area?' · '+s.area:''}</div><div style="font-size:0.68rem;color:var(--text2);margin-top:1px">${s.dur}分 · ${s.kcal}kcal</div></div>`;}else if(s.type==='weights'&&s.exDetails?.length){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">重訓</div>${(s.cats||[]).map(c=>`<span style="background:#EDE6F8;color:#7A5FAC;border-radius:5px;padding:2px 8px;font-size:0.62rem;font-weight:800">${c}</span>`).join('')}</div>`;s.exDetails.forEach(ex=>{const setsStr=ex.sets?.length>0?ex.sets.map(st=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join(' '):`${ex.sc||3}組×${ex.r||12}次`;html+=`<div style="margin-bottom:3px"><div style="font-size:0.76rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.66rem;color:var(--text2)">${ex.m?ex.m+' · ':''}${setsStr}</div></div>`;});html+='</div>';}});document.getElementById('dcSessions').innerHTML=html;document.getElementById('dayCardMo').classList.add('open');}
+function buildTodoItems(ds,log,plan){const items=[];if(log?.sessions){log.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}${s.extra?' ('+s.extra+')':''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:false,kcal:s.kcal||0});else if(s.type==='pilates')items.push({title:`皮拉提斯${s.area?' · '+s.area:''}`,sub:`${s.dur}分・${s.kcal}kcal`,done:false,kcal:s.kcal||0});else if(s.type==='weights'&&s.exDetails?.length)s.exDetails.forEach(ex=>{const setsStr=ex.sets?.length>0?`${ex.sets.length}組: ${ex.sets.map((st)=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join(' ')}`:`${ex.w||'自體'}${typeof ex.w==='number'?'kg':''} × ${ex.r||12}次 × ${ex.sc||3}組`;items.push({title:ex.n,sub:setsStr,done:false,kcal:0});});});}else if(plan?.sessions?.length){plan.sessions.forEach(s=>{if(s.type==='aerobic')items.push({title:`${s.act}`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='pilates')items.push({title:`皮拉提斯`,sub:`計劃 ${s.dur}分`,done:false});else if(s.type==='weights')items.push({title:'重訓',sub:'今日計劃',done:false});});}else if(plan?.acts?.length){plan.acts.forEach(act=>items.push({title:act,sub:'今日計劃',done:false}));}return items;}
+function deletePlanItem(ds,idx){
+  // Remove from log.sessions (items come from sessions, not plan.acts)
+  const log=S.logs.find(l=>l.date===ds);
+  if(log?.sessions){
+    // Build flat list of items to find which session index to remove
+    let flatIdx=0;
+    for(let si=0;si<log.sessions.length;si++){
+      const s=log.sessions[si];
+      if(s.type==='weights'&&s.exDetails?.length){
+        for(let ei=0;ei<s.exDetails.length;ei++){
+          if(flatIdx===idx){s.exDetails.splice(ei,1);if(!s.exDetails.length)log.sessions.splice(si,1);break;}
+          flatIdx++;
+        }
+      } else {
+        if(flatIdx===idx){log.sessions.splice(si,1);break;}
+        flatIdx++;
+      }
+    }
+    // Rebuild log
+    log.acts=[...new Set(log.sessions.map(s=>s.act||(s.cats?.[0])).filter(Boolean))];
+    log.kcal=log.sessions.reduce((t,s)=>t+(s.kcal||0),0);
+    log.dur=log.sessions.reduce((t,s)=>t+(s.dur||0),0);
+    if(!log.sessions.length){S.logs=S.logs.filter(l=>l.date!==ds);}
+    sd('logs',S.logs);
+    // Update weekPlan to match
+    if(S.weekPlan[ds]){
+      S.weekPlan[ds].sessions=log.sessions;
+      S.weekPlan[ds].acts=log.acts;
+      S.weekPlan[ds].kcal=log.kcal;
+      // Reset checked for this item onwards
+      const checked=S.weekPlan[ds].checked||{};
+      const newChecked={};
+      Object.keys(checked).forEach(k=>{if(parseInt(k)<idx)newChecked[k]=checked[k];else if(parseInt(k)>idx)newChecked[String(parseInt(k)-1)]=checked[k];});
+      S.weekPlan[ds].checked=newChecked;
+      if(!log.sessions?.length)delete S.weekPlan[ds];
+    }
+  } else {
+    // Plan-only items
+    const plan=S.weekPlan[ds];if(!plan)return;
+    if(plan.acts?.length>idx)plan.acts.splice(idx,1);
+    if(plan.checked)delete plan.checked[idx];
+    if(!plan.acts?.length)delete S.weekPlan[ds];
+  }
+  sd('weekPlan',S.weekPlan);updateHdr();renderWeek();renderLog();toast('已刪除');
+}
+function openDayCard(ds){const log=S.logs.find(l=>l.date===ds);if(!log)return;const d=new Date(ds+'T00:00:00');document.getElementById('dcName').textContent=S.name||'Glow Burn';document.getElementById('dcDate').textContent=d.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});const dcEmojis=['💪','🔥','⚡','🌟','🏆','✨'];document.getElementById('dcEmoji').textContent=dcEmojis[Math.floor(Math.random()*dcEmojis.length)];document.getElementById('dcStats').innerHTML=[{v:log.kcal||0,l:'消耗 kcal'},{v:log.dur||0,l:'分鐘'},{v:(log.sessions||[]).reduce((s,se)=>s+(se.type==='weights'?se.exDetails?.length||0:1),0)||0,l:'訓練項目'}].map(s=>`<div style="background:#F5F0FC;border-radius:11px;padding:10px;text-align:center;border:1px solid #EDE8F5"><div style="font-size:1.5rem;font-weight:900;color:var(--acc)">${s.v}</div><div style="font-size:0.58rem;font-weight:700;color:var(--text2);margin-top:2px">${s.l}</div></div>`).join('');let html='';(log.sessions||[]).forEach(s=>{if(s.type==='aerobic'){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">${s.act}${s.extra?' ('+s.extra+')':''}</div><div style="font-size:0.68rem;color:var(--text2);margin-top:1px">${s.dur}分 · ${s.kcal}kcal</div></div>`;}else if(s.type==='pilates'){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">皮拉提斯${s.area?' · '+s.area:''}</div><div style="font-size:0.68rem;color:var(--text2);margin-top:1px">${s.dur}分 · ${s.kcal}kcal</div></div>`;}else if(s.type==='weights'&&s.exDetails?.length){html+=`<div style="background:#F9F7FD;border-radius:9px;padding:8px 11px;margin-bottom:5px;border:1px solid #EDE8F5"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><div style="font-size:0.8rem;font-weight:800;color:var(--text)">重訓</div>${(s.cats||[]).map(c=>`<span style="background:#EDE6F8;color:#7A5FAC;border-radius:5px;padding:2px 8px;font-size:0.62rem;font-weight:800">${c}</span>`).join('')}</div>`;s.exDetails.forEach(ex=>{const setsStr=ex.sets?.length>0?`${ex.sets.map(st=>`${st.w}${typeof st.w==='number'?'kg':''}×${st.r}`).join(' ')} / ${ex.sets.length}組`:`${ex.w||'自體'}kg × ${ex.r||12}次 × ${ex.sc||3}組`;html+=`<div style="margin-bottom:3px"><div style="font-size:0.76rem;font-weight:800;color:var(--text)">${ex.n}</div><div style="font-size:0.66rem;color:var(--text2)">${ex.m?ex.m+' · ':''}${setsStr}</div></div>`;});html+='</div>';}});document.getElementById('dcSessions').innerHTML=html;document.getElementById('dayCardMo').classList.add('open');}
 const LEVEL_EMOJIS=['🌱','⚡','🔥','💜','🏆','👑'];
 const LEVELUP_QUOTES=['你的付出，正在轉化為真實的力量。','每一次訓練都是對自己的投資，你在成長。','等級提升只是數字，更重要的是你沒有放棄。','強大是一步一步累積的，你正在路上。','你比你想像的更能堅持，繼續前進！'];
 function checkLevelUp(oldXp,newXp){let oldLv=0,newLv=0;for(let i=0;i<LEVELS.length-1;i++){if(oldXp>=LEVELS[i+1].x)oldLv=i+1;else break;}for(let i=0;i<LEVELS.length-1;i++){if(newXp>=LEVELS[i+1].x)newLv=i+1;else break;}if(newLv>oldLv){const lvl=LEVELS[newLv];const nextLvl=LEVELS[Math.min(newLv+1,LEVELS.length-1)];document.getElementById('lvlUpEmoji').textContent=LEVEL_EMOJIS[newLv]||'🎖️';document.getElementById('lvlUpTitle').textContent=lvl.n;document.getElementById('lvlUpSub').textContent='你已升到 Lv.'+(newLv+1)+'！';document.getElementById('lvlUpXP').textContent=newLv<LEVELS.length-1?`距離下一級 ${lvl.n} 還差 ${nextLvl.x-newXp} XP`:'已達最高等級 👑';const q=LEVELUP_QUOTES[Math.floor(Math.random()*LEVELUP_QUOTES.length)];const qEl=document.getElementById('lvlUpQuote');if(qEl)qEl.textContent=q;setTimeout(()=>document.getElementById('levelUpMo').classList.add('open'),500);}}
@@ -816,5 +1075,7 @@ function sw(name,btn){document.querySelectorAll('.pg').forEach(p=>p.classList.re
 function toast(msg,dur=2400){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
 init();
 </script>
+
+<div style="text-align:center;padding:14px 0 8px;font-size:0.65rem;color:var(--text2);font-weight:600;letter-spacing:.04em;opacity:0.6">Created by @mao_0823</div>
 </body>
 </html>
