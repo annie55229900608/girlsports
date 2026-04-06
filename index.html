@@ -405,14 +405,10 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   <div class="wel-deco wel-deco1"></div>
   <div class="wel-deco wel-deco2"></div>
   <div class="wel-deco wel-deco3"></div>
-
-  <!-- Step 1: Intro -->
-  <div id="welStep1" style="text-align:center;animation:welFadeIn 1.2s ease forwards">
-    <div class="wel-logo" style="font-size:3rem;margin-bottom:10px;letter-spacing:.12em">GlowBorn</div>
+  <div id="welStep1" style="text-align:center;animation:welFadeIn 1.2s ease forwards;cursor:pointer" onclick="welNext()">
+    <div class="wel-logo" style="font-size:3rem;margin-bottom:10px;letter-spacing:.12em">Glow Born</div>
     <div class="wel-sub" style="margin-bottom:0;letter-spacing:.28em">MASTER YOUR LIFE</div>
   </div>
-
-  <!-- Step 2: Ask name -->
   <div id="welStep2" style="display:none;text-align:center;width:100%;max-width:340px;animation:welFadeIn .8s ease forwards">
     <div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.55);letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px">每一段旅程，都從一個名字開始</div>
     <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;font-weight:300;color:rgba(255,255,255,0.9);margin-bottom:20px">你的名字是？</div>
@@ -420,8 +416,6 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     <div id="welHint" style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:10px;font-weight:600;min-height:18px"></div>
     <button class="wel-btn" id="welConfirmBtn" onclick="welcomeSubmit()" style="margin-top:24px">確認</button>
   </div>
-
-  <!-- Step 3: Name reveal -->
   <div id="welStep3" style="display:none;text-align:center;animation:welFadeIn .8s ease forwards">
     <div style="font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px">Welcome</div>
     <div id="welNameReveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;color:#fff;line-height:1;margin-bottom:20px;animation:welNamePop .6s cubic-bezier(.34,1.56,.64,1) forwards"></div>
@@ -442,7 +436,10 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
 <div class="hdr">
   <div class="hdr-top">
     <div class="logo" style="font-size:1rem;letter-spacing:.18em;opacity:0.8">GLOWBORN</div>
-    <button class="nametag" id="nameBtn" onclick="openNameMo()" style="font-size:1rem;padding:5px 10px;opacity:0.75">👤</button>
+    <div style="display:flex;align-items:center;gap:6px">
+      <button id="genderBtn" onclick="toggleGender()" style="background:rgba(255,255,255,0.2);border:none;border-radius:50%;width:32px;height:32px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center" title="切換性別圖示">🏋️‍♀️</button>
+      <button class="nametag" id="nameBtn" onclick="openNameMo()" style="font-size:1rem;padding:5px 10px;opacity:0.75">👤</button>
+    </div>
   </div>
   <div class="hdr-info">
     <div style="position:relative;z-index:1;margin-bottom:5px">
@@ -499,14 +496,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     </div>
     <div class="cat-tabs" id="catTabs"></div>
     <div class="ex-list" id="exList"></div>
-    <!-- weight training duration input -->
-    <div style="display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 12px;background:#F9F7FD;border-radius:10px;border:1px solid #EDE8F5">
-      <div style="font-size:0.76rem;font-weight:700;color:var(--text2)">訓練時長</div>
-      <div class="dur-mini" style="flex:1;justify-content:flex-end">
-        <input type="number" id="wtDuration" value="" min="1" max="300" placeholder="分鐘" style="width:60px">
-        <span>分鐘</span>
-      </div>
-    </div>
+    <!-- weight training kcal estimate -->
     <!-- weight training kcal estimate -->
     <div id="weightKcal" style="display:none;margin-top:8px" class="kcal-row">
       <div><div class="kcal-row-lbl">重訓預估消耗</div><div class="kcal-row-sub" id="weightKcalDetail"></div></div>
@@ -516,11 +506,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
       </div>
     </div>
 
-    <!-- Weight training duration -->
-    <div id="wtDurRow" style="display:none;margin-top:8px;display:flex;align-items:center;gap:10px;background:#F9F7FD;border-radius:10px;padding:10px 14px">
-      <span style="font-size:0.78rem;font-weight:700;color:var(--text2);flex:1">重訓時長</span>
-      <div class="dur-mini"><input type="number" id="wtDurInput" value="60" min="1" max="300" style="width:58px"><span>分鐘</span></div>
-    </div>
+    <!-- Weight training duration -->    </div>
   </div>
 
   <!-- AEROBIC -->
@@ -1356,7 +1342,7 @@ function init(){
   document.getElementById('mq').textContent=QUOTES[Math.floor(Math.random()*QUOTES.length)];
   document.getElementById('todayStr').textContent=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
   renderTips();
-  updateHdr();updateNameBtn();updateMcard();
+  updateHdr();updateNameBtn();updateMcard();updateGenderBtn();
   selWkDay=today();renderWeek();renderWo();renderCal();
   renderWater();renderMeals();renderWdt();renderCharts();renderLog();renderAchs();loadProfile();
   setupFoodSearch();
@@ -1402,12 +1388,27 @@ function init(){
   if(!S.name){
     const ov=document.getElementById('welcomeOverlay');
     if(ov){ov.style.display='flex';ov.classList.remove('hiding');showWelStep(1);}
-    setTimeout(welNext,1000); // Step1 splash for 1 second
+    setTimeout(welNext,800); // Step1 splash for 1 second
   }
   document.getElementById('welNameInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')welcomeSubmit();});
 }
 
 // ══ HEADER ══
+// ══ GENDER ICON ══
+let userGender=gd('gender','F'); // 'M' or 'F'
+const GENDER_ICONS={'M':'🏋️‍♂️','F':'🏋️‍♀️'};
+
+function toggleGender(){
+  userGender=userGender==='M'?'F':'M';
+  sd('gender',userGender);
+  updateGenderBtn();
+}
+
+function updateGenderBtn(){
+  const btn=document.getElementById('genderBtn');
+  if(btn)btn.textContent=GENDER_ICONS[userGender]||'🏋️';
+}
+
 function updateMcard(){
   const h=new Date().getHours();
   const greet=h<5?'Good Night':h<12?'Good Morning':h<18?'Good Afternoon':'Good Evening';
@@ -1471,16 +1472,17 @@ function updateHdr(){
   const ws=getWkS();
   let hKcal=0;S.logs.filter(l=>new Date(l.date)>=ws).forEach(l=>{const c=S.weekPlan[l.date]?.checked||{};if(Object.values(c).some(v=>v===true))hKcal+=l.kcal||0;});
   document.getElementById('hK').textContent=hKcal;
-  const st=S.streak;
+  const h2=new Date().getHours();
+  const timeEmoji=h2<12?'🌤️':h2<18?'⚡':h2<22?'🔥':'🌙';
   const ws2=getWkS();
-  const wdays=S.logs.filter(l=>new Date(l.date)>=ws2&&new Date(l.date)<=new Date()).length;
-  const streakNote=st>=3?` · 連續 ${st} 天`:'';
+  const wdays=S.logs.filter(l=>new Date(l.date)>=ws2&&l.date<=today()&&isDayFullyComplete(l.date)).length;
+  const name2=S.name||'';
+  const prefix=name2?`${name2}，`:'';
   document.getElementById('streakTxt').textContent=
-    wdays>=6?`本週幾乎每天都訓練，太強了！${streakNote}`:
-    wdays>=4?`本週已訓練 ${wdays} 天，加油！${streakNote}`:
-    wdays>=2?`本週訓練 ${wdays} 天，繼續累積！${streakNote}`:
-    wdays===1?'本週開始第一天，好的開始！':
-    '本週還沒開始，今天就動起來！';
+    wdays>=5?`${prefix}本週練了 ${wdays} 天，超厲害！${timeEmoji}`:
+    wdays>=3?`${prefix}本週訓練 ${wdays} 天，繼續累積！${timeEmoji}`:
+    wdays>=1?`${prefix}本週開始第一天，好的開始！${timeEmoji}`:
+    `${prefix}今天開始訓練吧！${timeEmoji}`;
 }
 function updateNameBtn(){
   // Name button = icon only, tooltip shows name
@@ -1532,7 +1534,7 @@ function updateAllKcal(){
   const pilRows=[...document.querySelectorAll('#pilatesList .act-row.sel')];
   let pilKcal=0;
   pilRows.forEach(r=>{
-    const dur=parseInt(r.querySelector('input')?.value)||0;
+    const dur=parseInt(r.querySelector?.('input')?.value)||0;
     pilKcal+=Math.round(0.06*w*dur);
   });
   document.getElementById('pilatesKcal').style.display=pilRows.length?'flex':'none';
@@ -2840,6 +2842,13 @@ function openDayCard(ds){
 
 // ══ LEVEL UP ══
 const LEVEL_EMOJIS=['🌱','⚡','🔥','💜','🏆','👑'];
+const LEVELUP_QUOTES=[
+  '你的付出，正在轉化為真實的力量。',
+  '每一次訓練都是對自己的投資，你在成長。',
+  '等級提升只是數字，更重要的是你沒有放棄。',
+  '強大是一步一步累積的，你正在路上。',
+  '你比你想像的更能堅持，繼續前進！',
+];
 function checkLevelUp(oldXp, newXp){
   let oldLv=0,newLv=0;
   for(let i=0;i<LEVELS.length-1;i++){if(oldXp>=LEVELS[i+1].x)oldLv=i+1;else break;}
@@ -2921,13 +2930,7 @@ function getLevel(xp){
   return lv;
 }
 
-const LEVELUP_QUOTES=[
-  '你的付出，正在轉化為真實的力量。',
-  '每一次訓練都是對自己的投資，你在成長。',
-  '等級提升只是數字，更重要的是你沒有放棄。',
-  '強大是一步一步累積的，你正在路上。',
-  '你比你想像的更能堅持，繼續前進！',
-];
+
 
 function showLevelUp(lvl){
   const lvName=LEVELS[lvl]?.n||'訓練達人';
@@ -2991,12 +2994,8 @@ function showWelStep(n){
 }
 
 function welNext(){
-  const s1=document.getElementById('welStep1');
-  if(s1){s1.style.transition='opacity .4s ease';s1.style.opacity='0';}
-  setTimeout(()=>{
-    showWelStep(2);
-    setTimeout(()=>{document.getElementById('welNameInput')?.focus();},200);
-  },400);
+  showWelStep(2);
+  try{document.getElementById('welNameInput')?.focus();}catch(e){}
 }
 
 function welcomeSubmit(){
