@@ -339,6 +339,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   100%{transform:scale(1)}
 }
 @keyframes welRotate{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes slideUp{from{transform:translateY(80px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes welPulse{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
 .wel-dot-anim{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);
   animation:welPulse 1.2s ease infinite;}
@@ -454,8 +455,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
       <div class="xp-val" id="xpVal">0 XP</div>
     </div>
   </div>
-  <div class="hdr-stats">
-    <div class="hs"><div class="hs-v" id="hS">0</div><div class="hs-l">本週運動</div></div>
+  <div class="hdr-stats" style="grid-template-columns:1fr 1fr">
     <div class="hs"><div class="hs-v" id="hW">0</div><div class="hs-l">總訓練次</div></div>
     <div class="hs"><div class="hs-v" id="hK">0</div><div class="hs-l">本週 kcal</div></div>
   </div>
@@ -758,6 +758,11 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     <div class="ct">成就</div>
     <div class="ach-grid" id="achGrid"></div>
   </div>
+  <div class="card" style="text-align:center">
+    <div class="ct">新手教學</div>
+    <div style="font-size:0.8rem;color:var(--text2);font-weight:600;line-height:1.7;margin-bottom:12px">重新看一遍功能說明</div>
+    <button onclick="showTutorial()" style="background:var(--p3);border:none;border-radius:11px;padding:11px 28px;font-family:'Nunito',sans-serif;font-size:0.86rem;font-weight:800;cursor:pointer;color:#7A5FAC">📖 功能導覽</button>
+  </div>
   <div class="card">
     <div class="ct">個人資料</div>
     <div style="display:flex;flex-direction:column;gap:8px">
@@ -1008,6 +1013,22 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   </div>
 </div>
 
+<!-- TUTORIAL MODAL -->
+<div class="mo" id="tutorialMo" style="align-items:flex-end;padding:0">
+  <div style="background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:480px;padding:28px 24px 36px;animation:slideUp .35s ease">
+    <!-- Progress dots -->
+    <div id="tutDots" style="display:flex;gap:6px;justify-content:center;margin-bottom:20px"></div>
+    <!-- Content -->
+    <div id="tutEmoji" style="font-size:2.4rem;text-align:center;margin-bottom:12px"></div>
+    <div id="tutTitle" style="font-size:1.1rem;font-weight:900;color:var(--text);text-align:center;margin-bottom:8px;line-height:1.4"></div>
+    <div id="tutDesc" style="font-size:0.84rem;font-weight:600;color:var(--text2);text-align:center;line-height:1.8;margin-bottom:24px"></div>
+    <!-- Buttons -->
+    <div style="display:flex;gap:8px">
+      <button id="tutSkipBtn" onclick="closeTutorial()" style="background:#F9F7FD;color:var(--text2);border:none;border-radius:12px;padding:13px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer">跳過</button>
+      <button id="tutNextBtn" onclick="tutNext()" style="flex:1;background:linear-gradient(135deg,#7A5FAC,#9B80C8);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer">下一步</button>
+    </div>
+  </div>
+</div>
 <!-- COMPLETION MODAL -->
 <div class="mo" id="completionMo">
   <div class="mbox" style="text-align:center">
@@ -2834,6 +2855,53 @@ function showLevelUp(lv){
   document.getElementById('levelUpMo').classList.add('open');
 }
 
+// ══ TUTORIAL ══
+const TUTORIAL_STEPS=[
+  {e:'🌸',t:'歡迎使用 Glow Burn',d:'這是你的專屬健身記錄工具。\n讓我花 30 秒帶你認識主要功能！'},
+  {e:'💪',t:'訓練記錄',d:'點選動作 → 輸入重量次數 → 點「記錄這組」\n記錄完所有組數後，點「儲存訓練記錄」'},
+  {e:'✅',t:'打勾才算完成',d:'儲存後，在本週計劃裡手動打勾每個項目\n打勾完成才會計入訓練次數和消耗熱量'},
+  {e:'🌿',t:'飲食追蹤',d:'搜尋食物並記錄每天飲食\n追蹤大卡、蛋白質和碳水化合物攝取'},
+  {e:'🫶',t:'跑步追蹤',d:'點「跑步追蹤」tab → 按開始\n手機 GPS 自動記錄路線、距離和消耗熱量'},
+  {e:'🌟',t:'開始你的訓練旅程',d:'今天就開始第一筆記錄吧！\n每一次訓練都是最好的投資 ✨'},
+];
+let tutStep=0;
+
+function showTutorial(){
+  tutStep=0;
+  renderTutStep();
+  document.getElementById('tutorialMo').classList.add('open');
+}
+
+function renderTutStep(){
+  const s=TUTORIAL_STEPS[tutStep];
+  document.getElementById('tutEmoji').textContent=s.e;
+  document.getElementById('tutTitle').textContent=s.t;
+  document.getElementById('tutDesc').innerHTML=s.d.split('\n').join('<br>');
+  // Dots
+  document.getElementById('tutDots').innerHTML=TUTORIAL_STEPS.map((_,i)=>
+    `<div style="width:${i===tutStep?'20px':'7px'};height:7px;border-radius:10px;background:${i===tutStep?'#7A5FAC':'#EDE8F5'};transition:all .3s"></div>`
+  ).join('');
+  // Last step button
+  const isLast=tutStep===TUTORIAL_STEPS.length-1;
+  const nextBtn=document.getElementById('tutNextBtn');
+  if(nextBtn)nextBtn.textContent=isLast?'開始使用！':'下一步';
+  const skipBtn=document.getElementById('tutSkipBtn');
+  if(skipBtn)skipBtn.style.display=isLast?'none':'block';
+}
+
+function tutNext(){
+  if(tutStep<TUTORIAL_STEPS.length-1){
+    tutStep++;renderTutStep();
+  } else {
+    closeTutorial();
+  }
+}
+
+function closeTutorial(){
+  document.getElementById('tutorialMo').classList.remove('open');
+  sd('tutorialDone','true');
+}
+
 function renderAchs(){
   document.getElementById('achGrid').innerHTML=ACHS.map(a=>{const on=a.fn(S.logs.length,S.streak);
     return `<div class="ach${on?' on':''}"><div class="ach-ic">${a.ic}</div><div class="ach-n">${a.n}</div><div class="ach-d">${a.d}</div></div>`;}).join('');
@@ -2924,7 +2992,11 @@ function welcomeSubmit(){
   setTimeout(()=>{
     const ov=document.getElementById('welcomeOverlay');
     ov.classList.add('hiding');
-    setTimeout(()=>{ov.style.display='none';},1000);
+    setTimeout(()=>{
+      ov.style.display='none';
+      // Show tutorial on first login
+      if(!gd('tutorialDone',null)) setTimeout(showTutorial,400);
+    },1000);
   },2800);
 }
 
