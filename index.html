@@ -1465,7 +1465,8 @@ function markAllDone(ds){
   sd('weekPlan',S.weekPlan);
   renderWeek();
   updateHdr();
-  toast('全部完成！');
+  toast('全部完成！🎉');
+  setTimeout(()=>openDayCard(ds), 400);
 }
 
 // ── Check if all items for a day are checked ──
