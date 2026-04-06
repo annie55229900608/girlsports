@@ -22,7 +22,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-spacing:0.012em;min-height:100vh;color:var(--text);padding-bottom:80px;}
-.hdr{background:linear-gradient(135deg,#A088C8 0%,#7A5FAC 100%);padding:18px 18px 50px;position:relative;overflow:hidden;}
+.hdr{background:linear-gradient(135deg,#7A5FAC 0%,#9B80C8 50%,#C4AEE0 80%,#DDD5EF 100%);padding:18px 18px 50px;position:relative;overflow:hidden;}
 .hdr::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:rgba(255,255,255,0.2);border-radius:50%;}
 .hdr::after{content:'';position:absolute;bottom:-24px;left:14px;width:90px;height:90px;background:rgba(255,255,255,0.13);border-radius:50%;}
 .hdr-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
@@ -222,9 +222,15 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .tut-overlay{position:fixed;inset:0;background:rgba(20,10,40,0.68);z-index:350;pointer-events:none;transition:opacity .3s;}
 .tut-tooltip{position:fixed;bottom:88px;left:14px;right:14px;background:#fff;border-radius:20px;padding:20px 20px 16px;z-index:402;box-shadow:0 10px 40px rgba(0,0,0,0.25);animation:slideUp .3s ease;pointer-events:auto;}
-.tut-highlight{position:relative;z-index:360!important;box-shadow:0 0 0 3px #9B80C8, 0 0 0 6px rgba(155,128,200,0.3), 0 8px 32px rgba(122,95,172,0.4)!important;border-radius:14px!important;animation:tutGlow 1.6s ease infinite;}
-@keyframes tutGlow{0%,100%{box-shadow:0 0 0 3px #9B80C8, 0 0 0 6px rgba(155,128,200,0.3);}50%{box-shadow:0 0 0 4px #7A5FAC, 0 0 0 10px rgba(122,95,172,0.25), 0 12px 36px rgba(122,95,172,0.45);}}
-.welcome-overlay{position:fixed;inset:0;background:linear-gradient(160deg,#3D2060 0%,#5A3A8C 40%,#2A1850 100%);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;transition:opacity 1s ease;}
+.tut-highlight{position:relative;z-index:360!important;
+  outline:3px solid transparent;
+  border-radius:14px!important;
+  animation:tutGlow 1.8s ease infinite;}
+@keyframes tutGlow{
+  0%{box-shadow:0 0 0 3px #9B80C8,0 0 0 7px rgba(155,128,200,0.3),0 0 24px rgba(200,180,240,0.5);}
+  50%{box-shadow:0 0 0 4px #fff,0 0 0 8px rgba(155,128,200,0.5),0 0 40px rgba(180,150,230,0.7),0 0 60px rgba(255,255,255,0.3);}
+  100%{box-shadow:0 0 0 3px #9B80C8,0 0 0 7px rgba(155,128,200,0.3),0 0 24px rgba(200,180,240,0.5);}}
+.welcome-overlay{position:fixed;inset:0;background:linear-gradient(150deg,#3D2060 0%,#7A5FAC 40%,#C4AEE0 70%,#fff 100%);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;transition:opacity 1s ease;}
 .welcome-overlay.hiding{opacity:0;pointer-events:none;}
 .wel-logo{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:300;font-style:italic;color:#fff;letter-spacing:.1em;margin-bottom:8px;}
 .wel-sub{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:.22em;text-transform:uppercase;}
@@ -279,7 +285,7 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     <div class="logo" style="font-size:1rem;letter-spacing:.18em;opacity:0.8">GLOW BURN</div>
     <div style="display:flex;align-items:center;gap:6px">
       <button onclick="showTutorial()" style="background:rgba(255,255,255,0.2);border:none;border-radius:50%;width:32px;height:32px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">💡</button>
-      <button class="nametag" id="nameBtn" onclick="openNameMo()" style="font-size:1rem;padding:5px 10px;opacity:0.75">👤</button>
+      <button class="nametag" id="nameBtn" onclick="openNameMo()" style="font-size:1rem;padding:5px 10px;opacity:0.75">🌸</button>
     </div>
   </div>
   <div class="hdr-info">
@@ -516,7 +522,7 @@ function updateMcard(){const h=new Date().getHours();const greet=h<5?'Good Night
 function markAllDone(ds){const log=S.logs.find(l=>l.date===ds);const plan=S.weekPlan[ds]||{};const items=buildTodoItems(ds,log,plan);if(!S.weekPlan[ds])S.weekPlan[ds]={acts:[],checked:{}};if(!S.weekPlan[ds].checked)S.weekPlan[ds].checked={};items.forEach((_,i)=>{S.weekPlan[ds].checked[i]=true;});sd('weekPlan',S.weekPlan);renderWeek();updateHdr();toast('全部完成！🎉');setTimeout(()=>openDayCard(ds),400);}
 function isDayFullyComplete(ds){const log=S.logs.find(l=>l.date===ds);const plan=S.weekPlan[ds];if(!log)return false;const items=buildTodoItems(ds,log,plan);if(!items.length)return false;const checked=plan?.checked||{};return items.every((_,i)=>checked[String(i)]===true||checked[i]===true);}
 function updateHdr(){let lv=0;for(let i=0;i<LEVELS.length-1;i++){if(S.xp>=LEVELS[i+1].x)lv=i+1;else break;}const cl=LEVELS[lv],nl=LEVELS[Math.min(lv+1,LEVELS.length-1)];const pct=lv===LEVELS.length-1?100:((S.xp-cl.x)/(nl.x-cl.x)*100).toFixed(0);document.getElementById('lvlLbl').textContent=`Lv.${lv+1} ${cl.n}`;document.getElementById('xpVal').textContent=S.xp+' XP';document.getElementById('xpFill').style.width=pct+'%';const totalComplete=S.logs.filter(l=>isDayFullyComplete(l.date)).length;document.getElementById('hW').textContent=totalComplete;const ws=getWkS();let hKcal=0;S.logs.filter(l=>new Date(l.date)>=ws).forEach(l=>{const c=S.weekPlan[l.date]?.checked||{};if(Object.values(c).some(v=>v===true))hKcal+=l.kcal||0;});document.getElementById('hK').textContent=hKcal;const h2=new Date().getHours();const timeEmoji=h2<12?'🌤️':h2<18?'⚡':h2<22?'🔥':'🌙';const wdays=S.logs.filter(l=>new Date(l.date)>=getWkS()&&l.date<=today()&&isDayFullyComplete(l.date)).length;const name2=S.name||'';const prefix=name2?`${name2}，`:'';const MOTI=['你在變強，繼續保持！','每一次出現都是勝利。','今天的汗，是明天的蛻變。','持續就是超越。','相信自己的節奏。'];const motiQ=MOTI[new Date().getDate()%MOTI.length];document.getElementById('streakTxt').textContent=wdays>=5?`${prefix}本週練了 ${wdays} 天，超厲害！${timeEmoji} ${motiQ}`:wdays>=3?`${prefix}本週訓練 ${wdays} 天，繼續累積！${timeEmoji} ${motiQ}`:wdays>=1?`${prefix}本週開始第一天，好的開始！${timeEmoji} ${motiQ}`:`${prefix}今天開始訓練吧！${timeEmoji} ${motiQ}`;}
-function updateNameBtn(){const btn=document.getElementById('nameBtn');if(btn){btn.textContent='👤';btn.title=S.name?`${S.name} · 點此修改`:'設定名稱';}if(S.name){const p=document.getElementById('pName');if(p)p.value=S.name;}}
+function updateNameBtn(){const btn=document.getElementById('nameBtn');if(btn){btn.textContent='🌸';btn.title=S.name?`${S.name} · 點此修改`:'設定名稱';}if(S.name){const p=document.getElementById('pName');if(p)p.value=S.name;}}
 function updateAllKcal(){const w=getW();const aerRows=[...document.querySelectorAll('#aerobicList .act-row.sel')];let aerKcal=0,aerDetail=[];const customRow=document.getElementById('customAerobicRow');if(customRow&&customRow.classList.contains('sel')){const customName=document.getElementById('customAerobicName')?.value.trim()||'自訂有氧';customRow.dataset.act=customName;if(!aerRows.includes(customRow))aerRows.push(customRow);}aerRows.forEach(r=>{const act=r.dataset.act;const durEl=r.querySelector('input[type="number"]');const dur=parseInt(durEl?.value)||0;let k=0;if(act==='打羽球'){const intensity=document.getElementById('badminton-intensity')?.value||'mid';const met={low:0.07,mid:0.11,high:0.15}[intensity]||0.11;const labels={low:'低強度',mid:'中強度',high:'高強度'};k=Math.round(met*w*dur);aerDetail.push(`${act}(${labels[intensity]}) ${dur}分 ≈${k}kcal`);}else if(act==='飛輪'){const manualKcal=parseInt(document.getElementById('cycling-kcal')?.value)||0;k=manualKcal>0?manualKcal:Math.round((AMET['飛輪']||0.14)*w*dur);aerDetail.push(`飛輪 ${dur}分 ${manualKcal>0?'手動輸入':'估算'}:${k}kcal`);}else{k=Math.round((AMET[act]||0.1)*w*dur);aerDetail.push(`${act} ${dur}分 ≈${k}kcal`);}aerKcal+=k;});document.getElementById('aerobicKcal').style.display=aerRows.length?'flex':'none';document.getElementById('aerobicKcalVal').textContent=aerKcal;document.getElementById('aerobicKcalDetail').textContent=aerDetail.join('　');const pilRows=[...document.querySelectorAll('#pilatesList .act-row.sel')];let pilKcal=0;pilRows.forEach(r=>{const dur=parseInt(r.querySelector?.('input')?.value)||0;pilKcal+=Math.round(0.06*w*dur);});document.getElementById('pilatesKcal').style.display=pilRows.length?'flex':'none';document.getElementById('pilatesKcalVal').textContent=pilKcal;const exIds2=Object.keys(selEx);const bw=getW();let wtKcal=0,wtSetsTotal=0;exIds2.forEach(id=>{const ex=selEx[id];const sets=ex.sets?.length>0?ex.sets:Array(ex.sc||3).fill({w:ex.w,r:ex.r||12});sets.forEach(s=>{const liftKg=typeof s.w==='number'?s.w:0;const reps=s.r||ex.r||12;wtKcal+=(EX_MET[EX_TYPE[id]||'isolation']||3.5)*bw*((EX_REST_MIN[EX_TYPE[id]||'isolation']||1.5)/60)+liftKg*reps*0.00015;wtSetsTotal++;});});wtKcal=Math.round(wtKcal);document.getElementById('weightKcal').style.display=exIds2.length?'flex':'none';document.getElementById('weightKcalVal').textContent=wtKcal;document.getElementById('weightKcalDetail').textContent=wtSetsTotal>0?`${wtSetsTotal}組 ≈${wtKcal}kcal`:''}
 function finishToday(){const aerRows=[...document.querySelectorAll('#aerobicList .act-row.sel')];const pilRows=[...document.querySelectorAll('#pilatesList .act-row.sel')];const exIds=Object.keys(selEx);if(!aerRows.length&&!pilRows.length&&!exIds.length){toast('請先選擇訓練項目！');return;}const w=getW();const sessions=[];aerRows.forEach(r=>{const act=r.dataset.act;const durEl=r.querySelector('input[type="number"]');const dur=parseInt(durEl?.value)||0;let kcal=0,extra='';if(act==='打羽球'){const intensity=document.getElementById('badminton-intensity')?.value||'mid';const met={low:0.07,mid:0.11,high:0.15}[intensity]||0.11;const labels={low:'低強度',mid:'中強度',high:'高強度'};kcal=Math.round(met*w*dur);extra=labels[intensity];}else if(act==='飛輪'){const manualKcal=parseInt(document.getElementById('cycling-kcal')?.value)||0;kcal=manualKcal>0?manualKcal:Math.round(0.14*w*dur);extra=manualKcal>0?'手動':'估算';}else{kcal=Math.round((AMET[act]||0.1)*w*dur);}sessions.push({type:'aerobic',act,dur,kcal,extra});});pilRows.forEach(r=>{const dur=parseInt(r.querySelector('input[type="number"]')?.value)||0;const kcal=Math.round(0.06*w*dur);const area=document.getElementById('pilates-area')?.value||'全身';sessions.push({type:'pilates',act:'皮拉提斯',dur,kcal,area});});const exDetails=Object.keys(selEx).map(id=>{EX=getEX();let exMeta=null;for(const cat of Object.keys(EX)){const found=EX[cat].find(e=>e.id===id);if(found){exMeta=found;break;}}return {...selEx[id],id,m:exMeta?.m||selEx[id].m||''};});if(exIds.length){const cats=[...new Set(exIds.map(id=>{for(const c of Object.keys(EX)){if(EX[c].find(e=>e.id===id))return c;}return null;}).filter(Boolean))];const bwFin=getW();let wtKcalFin=0;exDetails.forEach(ex=>{const sets2=ex.sets?.length>0?ex.sets:Array(ex.sc||3).fill({w:ex.w,r:ex.r||12});sets2.forEach(s=>{const liftKg=typeof s.w==='number'?s.w:0;const reps=s.r||ex.r||12;wtKcalFin+=(EX_MET[EX_TYPE[ex.id||'']||'isolation']||3.5)*bwFin*((EX_REST_MIN[EX_TYPE[ex.id||'']||'isolation']||1.5)/60)+liftKg*reps*0.00015;});});const wtDurVal=parseInt(document.getElementById('wtDur')?.value)||60;sessions.push({type:'weights',cats,kcal:Math.round(wtKcalFin),dur:wtDurVal,exDetails});}const acts=[...aerRows.map(r=>r.dataset.act),...pilRows.map(()=>'皮拉提斯'),...(exIds.length?[...new Set(exIds.map(id=>{for(const c of Object.keys(EX)){if(EX[c].find(e=>e.id===id))return CAT2ACT[c]||c;}return null;}).filter(Boolean))]:[] )];const totalKcal=sessions.reduce((s,se)=>s+(se.kcal||0),0);const totalDur=sessions.reduce((s,se)=>s+(se.dur||0),0);const ds=selWkDay||today();const log={date:ds,acts:[...new Set(acts)],dur:totalDur,kcal:totalKcal,sessions};const ei=S.logs.findIndex(l=>l.date===ds);if(ei>=0)S.logs[ei]=log;else S.logs.push(log);sd('logs',S.logs);const existingPlan=S.weekPlan[ds]||{};S.weekPlan[ds]={...existingPlan,acts:log.acts,sessions:log.sessions,dur:log.dur,kcal:log.kcal};sd('weekPlan',S.weekPlan);const xp=acts.length*15+Math.round(totalDur/10);const oldXp=S.xp;S.xp+=xp;sd('xp',S.xp);checkLevelUp(oldXp,S.xp);const yest=new Date();yest.setDate(yest.getDate()-1);if(S.lastLog===dateStr(yest))S.streak++;else if(S.lastLog!==ds)S.streak=1;if(new Date(ds)<=new Date(today())){S.lastLog=ds;sd('streak',S.streak);sd('lastLog',S.lastLog);}updateHdr();renderWeek();renderLog();renderAchs();renderWdt();document.querySelectorAll('#aerobicList .act-row, #pilatesList .act-row').forEach(r=>r.classList.remove('sel'));selEx={};renderWo();updateAllKcal();showCompletionModal(log,xp);}
 function syncWin(v){const h=document.getElementById('wIn');if(h)h.value=v;updateAllKcal();}
@@ -590,15 +596,14 @@ function renderTutSpotlight(){
   // Tooltip position: top for saveFoodForm, bottom otherwise
   const ttEl=document.getElementById('tutTooltip');
   if(s.target==='saveFoodForm'){
-    if(ttEl){ttEl.style.bottom='auto';ttEl.style.top='12px';}
+    if(ttEl){ttEl.style.bottom='auto';ttEl.style.top='52px';}
     setTimeout(()=>{const f=document.getElementById('saveFoodForm');if(f){f.style.display='block';setTimeout(()=>f.scrollIntoView({behavior:'smooth',block:'start'}),400);}},350);
   } else {
     if(ttEl){ttEl.style.top='';ttEl.style.bottom='88px';}
   }
-  // Remove old highlight + restore parent z-index
+  // Remove old highlight
   if(tutHighlightEl){tutHighlightEl.classList.remove('tut-highlight');tutHighlightEl=null;}
-  document.querySelectorAll('[data-tut-elevated]').forEach(p=>{p.style.zIndex='';p.style.position='';delete p.dataset.tutElevated;});
-  // Apply new highlight
+  // Apply new highlight to element only
   if(s.target){
     setTimeout(()=>{
       const el=document.getElementById(s.target);
@@ -606,13 +611,6 @@ function renderTutSpotlight(){
         tutHighlightEl=el;
         el.classList.add('tut-highlight');
         el.scrollIntoView({behavior:'smooth',block:'center'});
-        // Elevate parent chain above overlay
-        let p=el.parentElement;
-        while(p&&p!==document.body){
-          const z=parseInt(window.getComputedStyle(p).zIndex)||0;
-          if(z<360){p.style.zIndex='361';p.style.position=p.style.position||'relative';p.dataset.tutElevated='1';}
-          p=p.parentElement;
-        }
       }
     },300);
   }
@@ -625,7 +623,7 @@ function renderTutSpotlight(){
   const skipBtn=document.getElementById('tutSkipBtn2');if(skipBtn)skipBtn.style.display=isLast?'none':'block';
 }
 function tutNext(){if(tutStep<TUTORIAL_STEPS.length-1){tutStep++;renderTutSpotlight();}else{closeTutorial();}}
-function closeTutorial(){document.getElementById('tutOverlay').style.display='none';document.getElementById('tutTooltip').style.display='none';const ttEl=document.getElementById('tutTooltip');if(ttEl){ttEl.style.top='';ttEl.style.bottom='88px';}if(tutHighlightEl){tutHighlightEl.classList.remove('tut-highlight');tutHighlightEl=null;}document.querySelectorAll('[data-tut-elevated]').forEach(p=>{p.style.zIndex='';p.style.position='';delete p.dataset.tutElevated;});sd('tutorialDone','true');const homeBtn=document.querySelector('.nb');if(homeBtn)homeBtn.click();}
+function closeTutorial(){document.getElementById('tutOverlay').style.display='none';document.getElementById('tutTooltip').style.display='none';const ttEl=document.getElementById('tutTooltip');if(ttEl){ttEl.style.top='';ttEl.style.bottom='88px';}if(tutHighlightEl){tutHighlightEl.classList.remove('tut-highlight');tutHighlightEl=null;}sd('tutorialDone','true');const homeBtn=document.querySelector('.nb');if(homeBtn)homeBtn.click();}
 function renderAchs(){document.getElementById('achGrid').innerHTML=ACHS.map(a=>{const on=a.fn(S.logs.length,S.streak);return `<div class="ach${on?' on':''}"><div class="ach-ic">${a.ic}</div><div class="ach-n">${a.n}</div><div class="ach-d">${a.d}</div></div>`;}).join('');}
 function loadBodyInputs(){const lastBody=S.body.slice(-1)[0];if(lastBody?.w){const h=document.getElementById('wIn');if(h)h.value=lastBody.w;const d=document.getElementById('wInDiet');if(d)d.value=lastBody.w;}if(lastBody?.f){const f=document.getElementById('fIn');if(f)f.value=lastBody.f;}}
 function loadProfile(){const p=S.profile||{};if(p.h)document.getElementById('pH').value=p.h;if(p.gw)document.getElementById('pGW').value=p.gw;if(p.cal)document.getElementById('pCal').value=p.cal;if(p.wt)document.getElementById('pWt').value=p.wt;if(S.name)document.getElementById('pName').value=S.name;}
