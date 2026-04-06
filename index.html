@@ -1311,7 +1311,7 @@ function showTipCat(idx){
     b.style.background=i===idx?'linear-gradient(135deg,var(--acc),var(--accb))':'var(--p3)';
     b.style.color=i===idx?'#fff':'var(--text2)';
   });
-  document.getElementById('tipItems').innerHTML=renderTipItems(idx);
+  const tiEl=document.getElementById('tipItems');if(tiEl)tiEl.innerHTML=renderTipItems(idx);
 }
 
 function gd(k,d){try{const v=localStorage.getItem('fl5_'+k);return v?JSON.parse(v):d;}catch{return d;}}
@@ -1466,7 +1466,7 @@ function updateHdr(){
     const ld=new Date(l.date+'T00:00:00');
     return ld>=thisWeekStart&&l.date<=today()&&isDayFullyComplete(l.date);
   }).length;
-  document.getElementById('hS').textContent=weekWorkoutDays;
+  const hSEl=document.getElementById('hS');if(hSEl)hSEl.textContent=weekWorkoutDays;
   const totalComplete=S.logs.filter(l=>isDayFullyComplete(l.date)).length;
   document.getElementById('hW').textContent=totalComplete;
   const ws=getWkS();
