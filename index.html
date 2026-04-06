@@ -431,6 +431,8 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     </div>
   </div>
 </div>
+<input type="hidden" id="wIn" value="60">
+<input type="hidden" id="fIn" value="20">
 
 <!-- HEADER -->
 <div class="hdr">
@@ -604,15 +606,6 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
   </div>
   </div>
 
-  <!-- BODY STATS -->
-  <div class="card">
-    <div class="ct">體態記錄</div>
-    <div class="si-row" style="margin-bottom:8px">
-      <div class="si-wrap"><div class="si-lbl">體重 (kg)</div><input class="si" type="number" id="wIn" placeholder="60.0" step="0.1" oninput="updateAllKcal()"></div>
-      <div class="si-wrap"><div class="si-lbl">體脂 (%)</div><input class="si" type="number" id="fIn" placeholder="20.0" step="0.1"></div>
-    </div>
-    <button class="btn sec" onclick="saveBody()">儲存體重 / 體脂</button>
-  </div>
 </div>
 
 <!-- ══ CALENDAR ══ -->
@@ -735,6 +728,15 @@ body{font-family:'Nunito',sans-serif;background:#F7F5FA;line-height:1.65;letter-
     <div style="font-size:0.7rem;font-weight:700;color:var(--text2);margin-top:6px">
       最新體脂 <span id="latF" style="color:var(--acc)">-- %</span>
     </div>
+  </div>
+  <!-- Body stats input in diet tab -->
+  <div class="card">
+    <div class="ct">體態記錄</div>
+    <div class="si-row" style="margin-bottom:8px">
+      <div class="si-wrap"><div class="si-lbl">體重 (kg)</div><input class="si" type="number" id="wInDiet" placeholder="60.0" step="0.1" oninput="syncWin(this.value)"></div>
+      <div class="si-wrap"><div class="si-lbl">體脂 (%)</div><input class="si" type="number" id="fIn" placeholder="20.0" step="0.1"></div>
+    </div>
+    <button class="btn sec" onclick="saveBody()">儲存體重 / 體脂</button>
   </div>
 </div>
 
@@ -1372,6 +1374,7 @@ function init(){
   initCustomExCats();
   applyFoodOverrides();
   initCustomAerobic();
+  loadBodyInputs();
   renderTrackHistory();
   // Restore daily steps
   const td2=today();
@@ -1674,6 +1677,7 @@ function finishToday(){
 }
 
 // ══ BODY ══
+function syncWin(v){const h=document.getElementById('wIn');if(h)h.value=v;updateAllKcal();}
 function saveBody(){
   const w=document.getElementById('wIn').value,f=document.getElementById('fIn').value;
   if(!w&&!f){toast('請輸入體重或體脂！');return;}
@@ -2944,6 +2948,14 @@ function showLevelUp(lvl){
 function renderAchs(){
   document.getElementById('achGrid').innerHTML=ACHS.map(a=>{const on=a.fn(S.logs.length,S.streak);
     return `<div class="ach${on?' on':''}"><div class="ach-ic">${a.ic}</div><div class="ach-n">${a.n}</div><div class="ach-d">${a.d}</div></div>`;}).join('');
+}
+function loadBodyInputs(){
+  const lastBody=S.body.slice(-1)[0];
+  if(lastBody?.w){
+    const h=document.getElementById('wIn');if(h)h.value=lastBody.w;
+    const d=document.getElementById('wInDiet');if(d)d.value=lastBody.w;
+  }
+  if(lastBody?.f){const f=document.getElementById('fIn');if(f)f.value=lastBody.f;}
 }
 function loadProfile(){
   const p=S.profile||{};
