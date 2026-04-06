@@ -515,7 +515,23 @@ function init(){
   document.querySelectorAll('.dur-mini input').forEach(i=>i.addEventListener('input',updateAllKcal));
   document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
   renderCustomFoods();initCustomExCats();applyFoodOverrides();initCustomAerobic();loadBodyInputs();
-  if(!S.name){const ov=document.getElementById('welcomeOverlay');if(ov){ov.style.display='flex';ov.classList.remove('hiding');showWelStep(1);}setTimeout(welNext,800);}
+  // Always show welcome on load
+  window.scrollTo(0,0);
+  const ov=document.getElementById('welcomeOverlay');
+  if(ov){ov.style.display='flex';ov.classList.remove('hiding');showWelStep(1);}
+  if(S.name){
+    // Has name: splash → name reveal → auto close
+    setTimeout(()=>{
+      const revealEl=document.getElementById('welNameReveal');
+      if(revealEl){const fs=S.name.length<=4?'4.5rem':S.name.length<=6?'3.8rem':S.name.length<=8?'3.2rem':'2.6rem';revealEl.style.fontSize=fs;revealEl.textContent=S.name;}
+      const q=CEREMONY_QUOTES[Math.floor(Math.random()*CEREMONY_QUOTES.length)];
+      const textEl=document.getElementById('welCeremonyText');if(textEl)textEl.textContent=q;
+      showWelStep(3);
+      setTimeout(()=>{ov.classList.add('hiding');setTimeout(()=>{ov.style.display='none';},1000);},2200);
+    },900);
+  } else {
+    setTimeout(welNext,800);
+  }
   document.getElementById('welNameInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')welcomeSubmit();});
 }
 function updateMcard(){const h=new Date().getHours();const greet=h<5?'Good Night':h<12?'Good Morning':h<18?'Good Afternoon':'Good Evening';const nameEl=document.getElementById('hdrGreeting');if(nameEl)nameEl.textContent=S.name?`${greet}, ${S.name}`:greet;}
@@ -596,7 +612,7 @@ function renderTutSpotlight(){
   // Tooltip position: top for saveFoodForm, bottom otherwise
   const ttEl=document.getElementById('tutTooltip');
   if(s.target==='saveFoodForm'){
-    if(ttEl){ttEl.style.bottom='auto';ttEl.style.top='52px';}
+    if(ttEl){ttEl.style.top='auto';ttEl.style.bottom='88px';}
     setTimeout(()=>{const f=document.getElementById('saveFoodForm');if(f){f.style.display='block';setTimeout(()=>f.scrollIntoView({behavior:'smooth',block:'start'}),400);}},350);
   } else {
     if(ttEl){ttEl.style.top='';ttEl.style.bottom='88px';}
